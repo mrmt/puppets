@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "last_pull": "2026-03-30T09:40:27.489318+00:00",
+  "last_pull": "2026-03-30T11:12:55.535241+00:00",
   "posts": {
     "803509353723445248": {
       "file": "content/posts/803509353723445248_text_first-ep-from-metafictions-is-out-go-listen.md",
-      "content_hash": "sha256:42c3f618a365ce4d8dfbfcf2555ec278ea84f2f4fe097ae01e74adefbb822171",
+      "content_hash": "sha256:1c6381c3b8c587c1bca3836b5b4e882cacac3c0bd0c5ada6e74a1a5eede0f9c5",
       "tumblr_updated_at": "2025-12-21 03:03:53 GMT",
-      "synced_at": "2026-03-30T09:16:35.650624+00:00"
+      "synced_at": "2026-03-30T11:20:50.757731+00:00"
     },
     "784492316764323840": {
       "file": "content/posts/784492316764323840_text_diastereomernothe-diastereomer-live-vocal-mix.md",
@@ -361,6 +361,36 @@
       "content_hash": "sha256:ed3e9c82e54b08f2edd3905c527f0b69e71c9adc2679716958202d47045617b6",
       "tumblr_updated_at": "1989-12-31 15:00:00 GMT",
       "synced_at": "2026-03-30T09:40:27.489314+00:00"
+    },
+    "812503688942944256": {
+      "file": "content/posts/812503688942944256_video_fast-action-official-music-video-metafictions.md",
+      "content_hash": "sha256:4540858c3758620a9346430807467a08c418fab441b2fabb2237a796d6a8b9dc",
+      "tumblr_updated_at": "2026-03-30 09:45:00 GMT",
+      "synced_at": "2026-03-30T11:20:51.374690+00:00"
+    },
+    "812504723927302144": {
+      "file": "content/posts/812504723927302144_video_trance-emulator.md",
+      "content_hash": "sha256:daadbe5259bff0d147693fb8f1d42555afe640948e430fa043a621ffd31e0aa3",
+      "tumblr_updated_at": "2026-03-30 10:01:27 GMT",
+      "synced_at": "2026-03-30T11:20:51.884979+00:00"
+    },
+    "812508929849524224": {
+      "file": "content/posts/812508929849524224_video_electric-life-official-music-video.md",
+      "content_hash": "sha256:f66dfbcd0efdb9b7b64703fd0c60c4275e695508d20344bc20164e1c81cc7ff2",
+      "tumblr_updated_at": "2026-03-30 11:08:18 GMT",
+      "synced_at": "2026-03-30T11:20:52.498802+00:00"
+    },
+    "812508930569846784": {
+      "file": "content/posts/812508930569846784_video_machine-age.md",
+      "content_hash": "sha256:14bb722cbe03ef7695ff40ad333b670fbbdcf7b261de1e1f80b47af4958f3043",
+      "tumblr_updated_at": "2026-03-30 11:08:18 GMT",
+      "synced_at": "2026-03-30T11:20:53.115950+00:00"
+    },
+    "812508931748413440": {
+      "file": "content/posts/812508931748413440_video_constellation-boundaries.md",
+      "content_hash": "sha256:cff07924da963017029a02ee97c149a48d41e3c7499dafdb5b3a2295a457ebdb",
+      "tumblr_updated_at": "2026-03-30 11:08:19 GMT",
+      "synced_at": "2026-03-30T11:20:53.624868+00:00"
     }
   }
 }
