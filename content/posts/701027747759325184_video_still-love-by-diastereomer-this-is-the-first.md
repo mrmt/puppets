@@ -7,7 +7,8 @@ tags:
 - diastereomer
 thumbnail_url: https://i.ytimg.com/vi/r6kqzvIW0P4/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=r6kqzvIW0P4
 ---
 
 <p><b>Still love by Diastereomer</b><br/>

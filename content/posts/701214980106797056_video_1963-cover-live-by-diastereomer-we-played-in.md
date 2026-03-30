@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/igpG6lybGnI/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=igpG6lybGnI
 ---
 
 <p><b>1963 (Cover) - Live by Diastereomer<br/></b>We played in 1990 at Kichijohji , Tokyo<br/></p>

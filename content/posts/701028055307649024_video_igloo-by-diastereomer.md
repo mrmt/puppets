@@ -7,7 +7,8 @@ tags:
 - diastereomer
 thumbnail_url: https://i.ytimg.com/vi/gzYkUSrUk5I/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=gzYkUSrUk5I
 ---
 
 <p><b>Igloo by Diastereomer</b></p>

@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/1uGn9vu0go8/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=1uGn9vu0go8
 ---
 
 <p><b>Place (Live) by Diastereomer</b><br/>

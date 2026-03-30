@@ -7,7 +7,8 @@ tags:
 - the twilight states
 thumbnail_url: https://i.ytimg.com/vi/VNk-6jPAZ1w/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=VNk-6jPAZ1w
 ---
 
 <p><b>Law of Gold by The Twilight States</b><br/>

@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/3Bj9jKMc5ng/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=3Bj9jKMc5ng
 ---
 
 <p><b>I&rsquo;ll Make You Feel Comfortable / SFH<br/></b>Recorded Live &lsquo;Motion X&rsquo; at Loop-Line, Sendagaya, Tokyo<br/>January 25, 2009</p>

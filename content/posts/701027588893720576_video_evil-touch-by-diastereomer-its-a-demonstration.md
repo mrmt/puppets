@@ -7,7 +7,8 @@ tags:
 - diastereomer
 thumbnail_url: https://i.ytimg.com/vi/3JIlzeqKf5g/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=3JIlzeqKf5g
 ---
 
 <p><b>Evil Touch by Diastereomer</b><br/>

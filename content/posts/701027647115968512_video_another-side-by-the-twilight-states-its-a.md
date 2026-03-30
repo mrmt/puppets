@@ -7,7 +7,8 @@ tags:
 - the twilight states
 thumbnail_url: https://i.ytimg.com/vi/FpWlqdaYnfc/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=FpWlqdaYnfc
 ---
 
 <p><b>Another Side by The Twilight States</b><br/>

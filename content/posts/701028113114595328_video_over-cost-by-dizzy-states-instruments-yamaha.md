@@ -7,7 +7,8 @@ tags:
 - dizzy states
 thumbnail_url: https://i.ytimg.com/vi/Xf8XrnSOreo/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=Xf8XrnSOreo
 ---
 
 <p>

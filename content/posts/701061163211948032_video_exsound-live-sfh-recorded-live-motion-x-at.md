@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/IIfS2l3rusA/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=IIfS2l3rusA
 ---
 
 <p><b>Exsound! (Live) / SFH</b><br/>Recorded Live &lsquo;Motion X&rsquo; at Loop-Line, Sendagaya, Tokyo<br/>January 25, 2009</p>

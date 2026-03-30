@@ -181,7 +181,14 @@ def tumblr_post_to_markdown(post: dict) -> str:
         body = post.get("caption", "")
 
     elif post["type"] == "video":
-        meta["video_url"] = post.get("video_url", "")
+        # YouTube 等の外部動画は permalink_url に URL が入る
+        video_url = (
+            post.get("permalink_url")
+            or post.get("video_url")
+            or ""
+        )
+        meta["video_url"] = video_url
+        meta["video_type"] = post.get("video_type", "")
         meta["thumbnail_url"] = post.get("thumbnail_url", "")
         body = post.get("caption", "")
 

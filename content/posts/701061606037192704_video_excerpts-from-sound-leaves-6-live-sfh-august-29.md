@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/9-PtomVi_Gc/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=9-PtomVi_Gc
 ---
 
 <p><b>Excerpts from Sound Leaves 6 Live / SFH</b><br/>August 29, 2009<br/>Loop-Line (Sendagaya, Tokyo)</p>

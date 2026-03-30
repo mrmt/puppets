@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/H2U36mC2y6w/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=H2U36mC2y6w
 ---
 
 <p><b>Dartmoor (Live) by Diastereomer</b><br/>

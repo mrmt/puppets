@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/8pgSlbNC_AU/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=8pgSlbNC_AU
 ---
 
 <p><b>Click Clock (Live) / SFH<br/></b>Recorded Live &lsquo;Sound Leaves 8&rsquo; at Studio + Cafe Bar Alghul (Roppongi, Tokyo)<br/>January 23, 2010<br/><a href="https://exsead.com/sl8/" target="_blank">https://exsead.com/sl8/</a><br/></p>

@@ -7,7 +7,8 @@ tags:
 - the twilight states
 thumbnail_url: https://i.ytimg.com/vi/QC0S1JzP6Tw/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=QC0S1JzP6Tw
 ---
 
 <p><b>Serve by The Twilight States</b><br/>

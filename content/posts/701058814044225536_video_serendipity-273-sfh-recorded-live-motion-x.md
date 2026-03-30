@@ -9,7 +9,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/7toW9cAY8os/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=7toW9cAY8os
 ---
 
 <p><b>Serendipity &amp; -273℃ / SFH</b><br/>Recorded Live &lsquo;Motion X&rsquo; at Loop-Line, Sendagaya, Tokyo<br/>January 25, 2009<br/></p>

@@ -8,7 +8,8 @@ tags:
 - diastereomer
 thumbnail_url: https://i.ytimg.com/vi/MF9qewqSCtY/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=MF9qewqSCtY
 ---
 
 <p><b>Stjarna (cover, live) by Diastereomer<br/></b>We played in 1990 at Kichijohji, Tokyo</p>

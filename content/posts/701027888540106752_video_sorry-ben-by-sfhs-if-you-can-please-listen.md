@@ -7,7 +7,8 @@ tags:
 - sfh
 thumbnail_url: https://i.ytimg.com/vi/DVoWPb_jkgc/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=DVoWPb_jkgc
 ---
 
 <p><b>Sorry, Ben! by SFH/S</b><br/>

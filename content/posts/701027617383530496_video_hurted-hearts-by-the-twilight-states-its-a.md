@@ -7,7 +7,8 @@ tags:
 - the twilight states
 thumbnail_url: https://i.ytimg.com/vi/3PysXQR6w4o/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=3PysXQR6w4o
 ---
 
 <p><b>Hurted Hearts by The Twilight States</b><br/>

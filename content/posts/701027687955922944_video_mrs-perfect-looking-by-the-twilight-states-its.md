@@ -7,7 +7,8 @@ tags:
 - the twilight states
 thumbnail_url: https://i.ytimg.com/vi/29ogCyXk7Fo/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=29ogCyXk7Fo
 ---
 
 <p><b>Mrs. Perfect Looking by The Twilight States</b><br/>

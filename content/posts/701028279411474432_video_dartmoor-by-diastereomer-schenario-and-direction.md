@@ -7,6 +7,7 @@ tags:
 - diastereomer
 thumbnail_url: ''
 type: video
+video_type: youtube
 video_url: ''
 ---
 

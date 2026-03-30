@@ -7,7 +7,8 @@ tags:
 - diastereomer
 thumbnail_url: https://i.ytimg.com/vi/oPbinnL69mE/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=oPbinnL69mE
 ---
 
 <p><b>Rosary by Diastereomer</b></p>

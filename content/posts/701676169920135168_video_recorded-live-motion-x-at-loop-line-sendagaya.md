@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/fk7u8A30N38/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=fk7u8A30N38
 ---
 
 <p><b>Recorded Live &lsquo;Motion X&rsquo; at Loop-Line, Sendagaya, Tokyo<br/></b>January 25, 2009</p>

@@ -7,7 +7,8 @@ tags:
 - diastereomer
 thumbnail_url: https://i.ytimg.com/vi/i3GUyjxljxw/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=i3GUyjxljxw
 ---
 
 <p><b>-273℃ by Diastereomer</b><br/>

@@ -8,7 +8,8 @@ tags:
 - fourier analysis
 thumbnail_url: https://i.ytimg.com/vi/8HlvpQSIb2g/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=8HlvpQSIb2g
 ---
 
 <p><b>Souvenir (Cover, Live) by Fourier Analysis</b><br/>

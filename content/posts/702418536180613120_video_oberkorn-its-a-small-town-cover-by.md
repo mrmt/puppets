@@ -7,7 +7,8 @@ tags:
 - diastereomer
 thumbnail_url: https://i.ytimg.com/vi/88DZd1Eir_s/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=88DZd1Eir_s
 ---
 
 <p><b>Oberkorn (It&rsquo;s a Small Town) (Cover) by Diastereomer</b><br/><a href="https://www.youtube.com/@shoman0410" target="_blank"></a>Demonstration version<br/><br/></p>

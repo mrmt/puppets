@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/DY5gmWAw95A/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=DY5gmWAw95A
 ---
 
 <p><b>-273℃ by Diastereomer</b><br/>

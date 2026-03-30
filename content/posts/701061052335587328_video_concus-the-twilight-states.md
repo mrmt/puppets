@@ -7,7 +7,8 @@ tags:
 - the twilight states
 thumbnail_url: https://i.ytimg.com/vi/a6xdLO3Elsg/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=a6xdLO3Elsg
 ---
 
 <p><b>Concus / The Twilight States</b><br/></p>

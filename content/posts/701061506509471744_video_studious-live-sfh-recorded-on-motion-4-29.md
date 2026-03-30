@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/nMbU2C1aau0/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=nMbU2C1aau0
 ---
 
 <p><b>Studious (Live) / SFH<br/></b>Recorded on MOTION 4, 29 April, 2007<br/>Loop-Line, Sendagaya, Tokyo<br/><a href="http://211-apart.org/motion4/" target="_blank">http://211-apart.org/motion4/</a></p>

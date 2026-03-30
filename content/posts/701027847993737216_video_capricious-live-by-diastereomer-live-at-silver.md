@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/S61dg5qGhNE/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=S61dg5qGhNE
 ---
 
 <p><b>Capricious (Live) by Diastereomer</b><br/>

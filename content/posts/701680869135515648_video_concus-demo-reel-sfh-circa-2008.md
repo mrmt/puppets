@@ -7,7 +7,8 @@ tags:
 - sfh
 thumbnail_url: https://i.ytimg.com/vi/WjFvgV_OMHw/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=WjFvgV_OMHw
 ---
 
 <p><b>Concus (Demo Reel) / SFH</b><br/>Circa 2008</p>

@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/CAWsY1hhFOM/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=CAWsY1hhFOM
 ---
 
 <p><b>Stand On (Live) / SFH</b><br/>Recorded Live &lsquo;Motion X&rsquo; at Loop-Line, Sendagaya, Tokyo<br/>January 25, 2009<br/><br/></p>

@@ -7,7 +7,8 @@ tags:
 - the twilight states
 thumbnail_url: https://i.ytimg.com/vi/Eb2wU0c78k4/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=Eb2wU0c78k4
 ---
 
 <p><b>Fields (cover) by The Twilight States</b></p>

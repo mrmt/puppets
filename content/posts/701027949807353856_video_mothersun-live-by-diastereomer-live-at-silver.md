@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/1xW8tl5ZeKs/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=1xW8tl5ZeKs
 ---
 
 <p><b>Mothersun (Live) by Diastereomer</b><br/>

@@ -7,7 +7,8 @@ tags:
 - the twilight states
 thumbnail_url: https://i.ytimg.com/vi/VkYcAJJKMGI/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=VkYcAJJKMGI
 ---
 
 <p><b>I&rsquo;ll Make You Feel Comfortable / The Twilight States</b><br/></p>

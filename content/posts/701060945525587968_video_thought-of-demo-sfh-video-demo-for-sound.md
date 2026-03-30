@@ -7,7 +7,8 @@ tags:
 - sfh
 thumbnail_url: https://i.ytimg.com/vi/jp6VmMf8HP0/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=jp6VmMf8HP0
 ---
 
 <p><b>Thought Of (Demo) / SFH<br/></b>Video demo for Sound Leaves 4<br/>Circa September 2007</p>

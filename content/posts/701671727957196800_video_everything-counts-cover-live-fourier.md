@@ -8,7 +8,8 @@ tags:
 - live
 thumbnail_url: https://i.ytimg.com/vi/i_SyRQ24EKY/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=i_SyRQ24EKY
 ---
 
 <p><b>Everything counts (Cover) - Live / Fourier Analysis with Midori<br/></b><a href="https://www.youtube.com/@puppetsrecords" target="_blank"></a>We played in 1990 at Kichijohji , Tokyo<br/>Programming: Sect Commune<br/></p>

@@ -7,7 +7,8 @@ tags:
 - sfh
 thumbnail_url: https://i.ytimg.com/vi/V9eRclxog48/hqdefault.jpg
 type: video
-video_url: ''
+video_type: youtube
+video_url: https://www.youtube.com/watch?v=V9eRclxog48
 ---
 
 <p><b>Unison Part 2 (Demo) / SFH</b><br/>Video + performance demo, circa September 2007<br/></p>
