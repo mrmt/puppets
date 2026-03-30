@@ -32,17 +32,17 @@ python -m http.server 8000
 ### 初回セットアップ
 
 ```bash
-uv run tumblr/auth.py   # 1Password から OAuth 認証（初回・トークン期限切れ時）
-uv run tumblr/sync.py pull  # Tumblr から全件ダウンロード
+uv run scripts/auth.py   # 1Password から OAuth 認証（初回・トークン期限切れ時）
+uv run scripts/sync.py pull  # Tumblr から全件ダウンロード
 ```
 
 ### 日常の操作
 
 ```bash
-uv run tumblr/sync.py status         # ローカルの変更状況を確認
-uv run tumblr/sync.py push --dry-run # 反映内容のプレビュー
-uv run tumblr/sync.py push           # Tumblr へ反映
-uv run tumblr/sync.py pull           # Tumblr の最新状態をローカルへ同期
+uv run scripts/sync.py status         # ローカルの変更状況を確認
+uv run scripts/sync.py push --dry-run # 反映内容のプレビュー
+uv run scripts/sync.py push           # Tumblr へ反映
+uv run scripts/sync.py pull           # Tumblr の最新状態をローカルへ同期
 ```
 
 ### 新規投稿の作り方

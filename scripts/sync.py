@@ -12,10 +12,10 @@
 Tumblr コンテンツ同期スクリプト
 
 使い方:
-  uv run tumblr/sync.py pull           # Tumblr → ローカルへ全件同期
-  uv run tumblr/sync.py push           # ローカル差分 → Tumblr へ反映
-  uv run tumblr/sync.py push --dry-run # 変更内容の確認のみ（API呼び出しなし）
-  uv run tumblr/sync.py status         # ローカル差分サマリー（API不使用）
+  uv run scripts/sync.py pull           # Tumblr → ローカルへ全件同期
+  uv run scripts/sync.py push           # ローカル差分 → Tumblr へ反映
+  uv run scripts/sync.py push --dry-run # 変更内容の確認のみ（API呼び出しなし）
+  uv run scripts/sync.py status         # ローカル差分サマリー（API不使用）
 """
 
 import hashlib
@@ -45,7 +45,7 @@ MANIFEST_PATH = Path(".tumblr-manifest.json")
 def load_token() -> dict:
     token_json = keyring.get_password(KEYRING_SERVICE, "token_json")
     if not token_json:
-        print("トークンが見つかりません。先に tumblr/auth.py を実行してください。")
+        print("トークンが見つかりません。先に scripts/auth.py を実行してください。")
         sys.exit(1)
     return json.loads(token_json)
 
@@ -96,7 +96,7 @@ def _handle_auth_error(response: httpx.Response):
             response.request.headers["Authorization"] = f"Bearer {new_token['access_token']}"
             response.request._refreshed = True  # type: ignore[attr-defined]
         else:
-            print("トークンの更新に失敗しました。tumblr/auth.py を再実行してください。")
+            print("トークンの更新に失敗しました。scripts/auth.py を再実行してください。")
             sys.exit(1)
 
 
@@ -580,7 +580,7 @@ def cmd_status(_args: list[str]):
             entry = manifest["posts"][post_id]
             print(f"  - {entry['file']} (ID:{post_id})")
 
-    print(f"\n`uv run tumblr/sync.py push --dry-run` で詳細を確認できます。")
+    print(f"\n`uv run scripts/sync.py push --dry-run` で詳細を確認できます。")
 
 
 # --- エントリポイント ---

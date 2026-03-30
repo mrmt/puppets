@@ -12,7 +12,7 @@ Tumblr OAuth 2.0 認証スクリプト
 アクセストークンを keyring に保存する。
 
 使い方:
-  uv run tumblr/auth.py
+  uv run scripts/auth.py
 """
 
 import base64

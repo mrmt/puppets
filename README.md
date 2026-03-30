@@ -9,17 +9,17 @@
 [uv](https://docs.astral.sh/uv/) が必要。
 
 ```bash
-uv run tumblr/auth.py       # 初回認証（1Password から OAuth トークン取得）
-uv run tumblr/sync.py pull  # Tumblr の投稿をローカルへダウンロード
+uv run scripts/auth.py       # 初回認証（1Password から OAuth トークン取得）
+uv run scripts/sync.py pull  # Tumblr の投稿をローカルへダウンロード
 ```
 
 ## 投稿の管理
 
 ```bash
-uv run tumblr/sync.py status          # ローカルの変更状況を確認
-uv run tumblr/sync.py push --dry-run  # 反映内容のプレビュー
-uv run tumblr/sync.py push            # Tumblr へ反映
-uv run tumblr/sync.py pull            # Tumblr の最新状態をローカルへ同期
+uv run scripts/sync.py status          # ローカルの変更状況を確認
+uv run scripts/sync.py push --dry-run  # 反映内容のプレビュー
+uv run scripts/sync.py push            # Tumblr へ反映
+uv run scripts/sync.py pull            # Tumblr の最新状態をローカルへ同期
 ```
 
 ### 新規投稿
