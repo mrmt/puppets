@@ -151,8 +151,8 @@ def main():
 
     existing = keyring.get_password(KEYRING_SERVICE, "token_json")
     if existing:
-        ans = input("既存のトークンが見つかりました。再取得しますか？ [y/N]: ").strip().lower()
-        if ans != "y":
+        ans = input("既存のトークンが見つかりました。再取得しますか？ [Y/n]: ").strip().lower()
+        if ans == "n":
             print("既存のトークンを使用します。")
             return
 
