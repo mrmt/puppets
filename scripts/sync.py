@@ -23,6 +23,7 @@ import json
 import sys
 import time
 from datetime import datetime, timezone
+import re
 from pathlib import Path
 
 import frontmatter
@@ -211,6 +212,37 @@ def tumblr_post_to_markdown(post: dict) -> str:
 
 # --- Markdown → Tumblr API パラメータ変換 ---
 
+def normalize_date_for_tumblr(date_value) -> str | None:
+    """
+    frontmatter の date 値を Tumblr API 形式（YYYY-MM-DD HH:MM:SS GMT）に変換する。
+    - YYYY-MM-DD のみの場合: YYYY-MM-DD 01:00:00 GMT
+    - すでに datetime 型の場合: そのまま変換
+    - ISO 8601 文字列の場合: パースして変換
+    """
+    if not date_value:
+        return None
+
+    # datetime オブジェクトの場合
+    if isinstance(date_value, datetime):
+        return date_value.strftime("%Y-%m-%d %H:%M:%S GMT")
+
+    date_str = str(date_value).strip()
+
+    # YYYY-MM-DD のみ（時刻なし）
+    if re.fullmatch(r"\d{4}-\d{2}-\d{2}", date_str):
+        return f"{date_str} 01:00:00 GMT"
+
+    # ISO 8601 形式（例: 2024-01-15T10:30:00+00:00）
+    try:
+        dt = datetime.fromisoformat(date_str)
+        return dt.strftime("%Y-%m-%d %H:%M:%S GMT")
+    except ValueError:
+        pass
+
+    # すでに Tumblr 形式の場合はそのまま返す
+    return date_str
+
+
 def markdown_to_tumblr_params(post_obj: frontmatter.Post, base_dir: Path) -> tuple[dict, dict]:
     """
     frontmatter + body から Tumblr API 用の data と files を生成する。
@@ -228,6 +260,11 @@ def markdown_to_tumblr_params(post_obj: frontmatter.Post, base_dir: Path) -> tup
     }
     if tag_str:
         data["tags"] = tag_str
+
+    # 投稿日時（frontmatter に date があれば Tumblr API に送信）
+    tumblr_date = normalize_date_for_tumblr(post_obj.metadata.get("date"))
+    if tumblr_date:
+        data["date"] = tumblr_date
 
     files: dict = {}
 
