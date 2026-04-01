@@ -1,7 +1,7 @@
 ---
-date: 2021-09-01 00:00:00 GMT
+date: 2021-09-11 01:00:00 GMT
 id: 812612699342127104
-slug: room-in-the-tableau-groovynight
+slug: room-in-the-tableau-sect-commune-groovy-night
 state: published
 tags:
 - sectcommune

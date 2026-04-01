@@ -1,7 +1,7 @@
 ---
-date: 1989-01-01 00:00:00 GMT
+date: 2006-09-09 01:00:00 GMT
 id: 812612708049485825
-slug: reluctance-excerpts
+slug: reluctance-excerpts-sect-commune
 state: published
 tags:
 - sectcommune

@@ -1,5 +1,5 @@
 ---
-date: 2013-08-17 15:00:00 GMT
+date: 2013-08-18 01:00:00 GMT
 id: 812612718377009152
 slug: narcolepsy-sound-leaves-12-live-at-bullets
 state: published

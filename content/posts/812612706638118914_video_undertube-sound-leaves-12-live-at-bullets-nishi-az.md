@@ -1,7 +1,7 @@
 ---
-date: 2019-07-03 00:00:00 GMT
+date: 2013-08-18 01:00:00 GMT
 id: 812612706638118914
-slug: undertube-sound-leaves-12
+slug: undertube-sound-leaves-12-live-at-bullets
 state: published
 tags:
 - sectcommune
@@ -20,11 +20,11 @@ video_type: youtube
 video_url: https://www.youtube.com/watch?v=P6mLKY2MfPQ
 ---
 
-<p><b>Undertube (Sound Leaves 12, Live at Bullet&rsquo;s, Nishi-Azabu, Tokyo) / Sect Commune</b><br/>
+<p><b>Undertube (Sound Leaves 12, Live at Bullet’s, Nishi-Azabu, Tokyo) / Sect Commune</b><br/>
 <br/>
 August 18, 2013<br/>
 Sound Leaves 12<br/>
-Bullet&rsquo;s, Nishi-Azabu, Tokyo<br/>
+Bullet’s, Nishi-Azabu, Tokyo<br/>
 <a href="https://exsead.com/sl12/" target="_blank">https://exsead.com/sl12/</a><br/>
 <br/>
 Follow us via

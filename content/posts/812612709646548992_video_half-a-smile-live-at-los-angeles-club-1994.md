@@ -1,7 +1,7 @@
 ---
-date: 1994-01-01 00:00:00 GMT
+date: 1994-10-01 01:00:00 GMT
 id: 812612709646548992
-slug: half-a-smile-live
+slug: half-a-smile-live-at-los-angeles-club-1994
 state: published
 tags:
 - sectcommune

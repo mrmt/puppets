@@ -1,7 +1,7 @@
 ---
-date: 1994-01-01 00:00:00 GMT
+date: 2020-09-05 10:00:00 GMT
 id: 812612710420316160
-slug: she-goes-in-the-fall-groovynight
+slug: she-goes-in-the-fall-sect-commune-groovynight
 state: published
 tags:
 - sectcommune

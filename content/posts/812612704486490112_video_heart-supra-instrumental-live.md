@@ -1,7 +1,7 @@
 ---
-date: 2020-09-05 00:00:00 GMT
+date: 2015-09-05 11:00:00 GMT
 id: 812612704486490112
-slug: heart-supra-instrumental-live
+slug: heart-supra-instrumental-live-sect-commune
 state: published
 tags:
 - sectcommune
@@ -20,8 +20,9 @@ video_url: https://www.youtube.com/watch?v=NXhd5SDITJE
 
 <p><b>Heart Supra (Instrumental, Live) / Sect Commune</b><br/>
 <br/>
+November 5, 2015<br/>
 Mirai Ongakusai (Future Music Festival)<br/>
-Bullet&rsquo;s Nishiazabu, Tokyo<br/>
+Bullet’s Nishiazabu, Tokyo<br/>
 <br/>
 Follow us via
 <a target="_blank" href="https://sect-commune.com">Official site</a>,

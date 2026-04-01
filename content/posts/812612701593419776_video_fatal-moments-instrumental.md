@@ -1,7 +1,7 @@
 ---
-date: 2009-01-12 00:00:00 GMT
+date: 2009-01-12 01:00:00 GMT
 id: 812612701593419776
-slug: fatal-moments-instrumental
+slug: fatal-moments-instrumental-sect-commune
 state: published
 tags:
 - sectcommune

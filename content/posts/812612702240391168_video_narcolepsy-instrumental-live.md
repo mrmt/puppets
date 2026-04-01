@@ -1,7 +1,7 @@
 ---
-date: 2019-07-03 00:00:00 GMT
+date: 2015-09-05 11:00:00 GMT
 id: 812612702240391168
-slug: narcolepsy-instrumental-live
+slug: narcolepsy-instrumental-live-sect-commune
 state: published
 tags:
 - sectcommune
@@ -20,8 +20,9 @@ video_url: https://www.youtube.com/watch?v=KtkJmW75fq0
 
 <p><b>Narcolepsy (Instrumental, Live) / Sect Commune</b><br/>
 <br/>
+November 5, 2015<br/>
 Mirai Ongakusai (Future Music Festival)<br/>
-Bullet&rsquo;s Nishiazabu, Tokyo<br/>
+Bullet’s Nishiazabu, Tokyo<br/>
 <br/>
 Follow us via
 <a target="_blank" href="https://sect-commune.com">Official site</a>,

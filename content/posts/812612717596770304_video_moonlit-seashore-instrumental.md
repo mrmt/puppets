@@ -1,7 +1,7 @@
 ---
-date: 2013-05-23 00:00:00 GMT
+date: 1989-03-31 14:56:49 GMT
 id: 812612717596770304
-slug: moonlit-seashore-instrumental
+slug: moonlit-seashore-instrumental-sect-commune
 state: published
 tags:
 - sectcommune

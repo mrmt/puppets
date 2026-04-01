@@ -1,7 +1,7 @@
 ---
-date: 2006-09-01 00:00:00 GMT
+date: 2006-09-01 01:00:00 GMT
 id: 812612698620788736
-slug: easy-to-find-you-excerpt
+slug: easy-to-find-you-excerpt-sect-commune
 state: published
 tags:
 - sectcommune

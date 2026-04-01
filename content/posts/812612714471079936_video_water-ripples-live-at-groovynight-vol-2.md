@@ -1,7 +1,7 @@
 ---
-date: 2019-07-03 00:00:00 GMT
+date: 2019-03-09 01:00:00 GMT
 id: 812612714471079936
-slug: water-ripples-live-at-groovynight-vol2
+slug: water-ripples-live-at-groovynight-vol-2-sect
 state: published
 tags:
 - sectcommune

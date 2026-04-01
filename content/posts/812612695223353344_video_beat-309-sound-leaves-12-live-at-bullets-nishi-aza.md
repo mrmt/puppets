@@ -1,7 +1,7 @@
 ---
-date: 2015-01-01 00:00:00 GMT
+date: 2013-08-18 01:00:00 GMT
 id: 812612695223353344
-slug: beat-309-sound-leaves-12
+slug: beat-309-sound-leaves-12-live-at-bullets
 state: published
 tags:
 - sectcommune
@@ -18,11 +18,11 @@ video_type: youtube
 video_url: https://www.youtube.com/watch?v=9-S6ghFYQa0
 ---
 
-<p><b>Beat 309 (Sound Leaves 12, Live at Bullet&rsquo;s, Nishi-Azabu, Tokyo) / Sect Commune</b><br/>
+<p><b>Beat 309 (Sound Leaves 12, Live at Bullet’s, Nishi-Azabu, Tokyo) / Sect Commune</b><br/>
 <br/>
 August 18, 2013<br/>
 Sound Leaves 12<br/>
-Bullet&rsquo;s, Nishi-Azabu, Tokyo<br/>
+Bullet’s, Nishi-Azabu, Tokyo<br/>
 <a href="https://exsead.com/sl12/" target="_blank">https://exsead.com/sl12/</a><br/>
 <br/>
 Follow us via

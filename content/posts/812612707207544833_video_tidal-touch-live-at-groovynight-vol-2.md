@@ -1,7 +1,7 @@
 ---
-date: 2019-07-03 00:00:00 GMT
+date: 2019-03-09 01:00:00 GMT
 id: 812612707207544833
-slug: tidal-touch-live-at-groovynight-vol2
+slug: tidal-touch-live-at-groovynight-vol-2-sect
 state: published
 tags:
 - sectcommune
