@@ -14,10 +14,10 @@ tags:
 - intelligentdancemusic
 - experimentalbass
 - noisemusic
-thumbnail_url: https://i.ytimg.com/vi/xBMYjU-HDGU/hqdefault.jpg
+thumbnail_url: https://i.ytimg.com/vi/2-WcIj9zaTg/hqdefault.jpg
 type: video
 video_type: youtube
-video_url: https://www.youtube.com/watch?v=xBMYjU-HDGU
+video_url: https://www.youtube.com/watch?v=2-WcIj9zaTg
 ---
 
 <p><b>Constellation Boundaries (Official Music Video) / metafictions</b><br/>

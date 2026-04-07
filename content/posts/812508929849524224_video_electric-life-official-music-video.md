@@ -18,10 +18,10 @@ tags:
 - experimentalelectronic
 - experimentalelectronicmusic
 - drumandbass
-thumbnail_url: https://i.ytimg.com/vi/_Q3qTuzzi1c/hqdefault.jpg
+thumbnail_url: https://i.ytimg.com/vi/H6Aq4BOq-C0/hqdefault.jpg
 type: video
 video_type: youtube
-video_url: https://www.youtube.com/watch?v=_Q3qTuzzi1c
+video_url: https://www.youtube.com/watch?v=H6Aq4BOq-C0
 ---
 
 <p><b>Electric Life (Official Music Video) / metafictions</b><br/>

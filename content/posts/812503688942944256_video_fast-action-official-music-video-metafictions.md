@@ -9,10 +9,10 @@ tags:
 - cutup
 - glitch
 - glitchmusic
-thumbnail_url: https://i.ytimg.com/vi/4deSjeo1VKE/hqdefault.jpg
+thumbnail_url: https://i.ytimg.com/vi/YoTHuUJ5t9w/hqdefault.jpg
 type: video
 video_type: youtube
-video_url: https://www.youtube.com/watch?v=4deSjeo1VKE
+video_url: https://www.youtube.com/watch?v=YoTHuUJ5t9w
 ---
 
 <p><b>Fast-Action (Official Music Video) / metafictions</b><br/>
