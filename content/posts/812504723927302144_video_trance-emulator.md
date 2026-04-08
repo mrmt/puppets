@@ -15,10 +15,10 @@ tags:
 - intelligentdancemusic
 - experimentalelectronicmusic
 - experimentalelectronic
-thumbnail_url: https://i.ytimg.com/vi/hvsgzGSTKVA/hqdefault.jpg
+thumbnail_url: https://i.ytimg.com/vi/I90tWK0F6Rw/hqdefault.jpg
 type: video
 video_type: youtube
-video_url: https://www.youtube.com/watch?v=hvsgzGSTKVA
+video_url: https://www.youtube.com/watch?v=I90tWK0F6Rw
 ---
 
 <p><b>Trance Emulator (Official Music Video) / metafictions</b><br/>
