@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_pull": "2026-04-08T03:36:35.457615+00:00",
+  "last_pull": "2026-04-08T15:55:58.447204+00:00",
   "posts": {
     "803509353723445248": {
       "file": "content/posts/803509353723445248_text_first-ep-from-metafictions-is-out-go-listen.md",
@@ -589,6 +589,12 @@
       "content_hash": "sha256:8667a9848ebb89dbf8839663c03b899aa7fcdd559b3c762f54a317f0a639a12c",
       "tumblr_updated_at": "1989-01-01 05:36:00 GMT",
       "synced_at": "2026-04-05T11:25:14.152369+00:00"
+    },
+    "813342393424297984": {
+      "file": "content/posts/813342393424297984_video_going-concern-trilogy-highlights.md",
+      "content_hash": "sha256:9e3a0f93211b041bd502cfc558148156ad613cca3615530c329e957c2a6a1d66",
+      "tumblr_updated_at": "2026-04-08 15:55:50 GMT",
+      "synced_at": "2026-04-08T15:55:58.445977+00:00"
     }
   }
 }
