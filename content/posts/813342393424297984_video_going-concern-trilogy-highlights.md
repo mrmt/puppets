@@ -16,10 +16,10 @@ tags:
 - breakcore
 - industrialmusic
 - electronicmusic
-thumbnail_url: https://i.ytimg.com/vi/C-8CIfH4yPQ/hqdefault.jpg
+thumbnail_url: https://i.ytimg.com/vi/jqcMIBMjESo/hqdefault.jpg
 type: video
 video_type: youtube
-video_url: https://www.youtube.com/watch?v=C-8CIfH4yPQ
+video_url: https://www.youtube.com/watch?v=jqcMIBMjESo
 ---
 
 <p><b>metafictions — Going Concern Trilogy Highlights / metafictions</b><br/>
