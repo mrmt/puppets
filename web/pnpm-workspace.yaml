@@ -1,0 +1,46 @@
+overrides:
+  astro-embed: ^0.13.1
+  body-parser: ^2.3.0
+  browserslist: ^4.28.7
+  dompurify: ^3.4.13
+  echarts: ^6.1.0
+  esbuild: ^0.28.1
+  undici: ^7.29.0
+  fast-uri: ^3.1.6
+  '@hono/node-server': ^1.19.15
+  hono: ^4.13.5
+  ip-address: ^10.2.2
+  js-yaml: ^4.3.2
+  kysely: ^0.29.2
+  linkify-it: ^5.0.2
+  markdown-it: ^14.2.0
+  nanoid@3: ^3.3.17
+  postcss: ^8.5.23
+  qs: ^6.16.0
+  sanitize-html: ^2.17.7
+  seroval: ^1.5.3
+  smol-toml: ^1.7.1
+  '@tiptap/core': ^3.30.4
+  '@tiptap/pm': ^3.30.4
+  '@tiptap/react': ^3.30.4
+  sharp: ^0.35.4
+  svgo: ^4.1.0
+  valibot: ^1.4.2
+  vite: ^8.0.13
+  ws: ^8.20.1
+  yaml: ^2.8.3
+allowBuilds:
+  esbuild: true
+  workerd: true
+  better-sqlite3: false
+  sharp: false
+minimumReleaseAgeExclude:
+  - '@emdash-cms/admin@0.37.0'
+  - '@emdash-cms/auth@0.37.0'
+  - '@emdash-cms/blocks@0.37.0'
+  - '@emdash-cms/cloudflare@0.37.0'
+  - '@emdash-cms/gutenberg-to-portable-text@0.37.0'
+  - '@emdash-cms/plugin-types@0.3.1'
+  - '@emdash-cms/registry-client@0.5.0'
+  - '@emdash-cms/registry-verification@0.3.0'
+  - emdash@0.37.0

@@ -1,0 +1,101 @@
+---
+import { getEmDashCollection, getEmDashEntry, decodeSlug } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+import PostCard from "../../components/PostCard.astro";
+import PortableTextLink from "../../components/PortableTextLink.astro";
+import { artistLinks } from "../../utils/artists";
+import { mediaUrl } from "../../utils/media";
+
+const slug = decodeSlug(Astro.params.slug);
+const { entry: artist, cacheHint } = slug ? await getEmDashEntry("artists", slug) : { entry: null, cacheHint: undefined };
+
+if (!artist) {
+	return Astro.rewrite("/404");
+}
+Astro.cache.set(cacheHint);
+
+const { entries: posts } = await getEmDashCollection("posts", {
+	where: { tag: artist.data.tag },
+	orderBy: { published_at: "desc" },
+});
+const links = artistLinks(artist.data.links);
+const image = mediaUrl(artist.data.image);
+---
+
+<Base
+	title={artist.data.name}
+	description={`${artist.data.name} — puppets records`}
+	image={image}
+	content={{ collection: "artists", id: artist.data.id, slug: artist.id }}
+>
+	<section class="section artist-head">
+		<div class="container">
+			<p class="eyebrow"><a href="/artists">Artists</a> / {posts.length} posts</p>
+			<h1 class="display artist-title">{artist.data.name}</h1>
+			{
+				artist.data.description && (
+					<div class="prose artist-desc">
+						<PortableText value={artist.data.description} components={{ mark: { link: PortableTextLink } }} />
+					</div>
+				)
+			}
+			{
+				links.length > 0 && (
+					<ul class="links meta">
+						{links.map((l) => (
+							<li>
+								<a href={l.url} rel="noopener">{l.label} ↗</a>
+							</li>
+						))}
+					</ul>
+				)
+			}
+		</div>
+	</section>
+
+	<section class="container">
+		<ul class="card-grid">
+			{posts.map((post) => <PostCard post={post} />)}
+		</ul>
+	</section>
+</Base>
+
+<style>
+	.artist-head {
+		border-bottom: 1px solid var(--color-border-subtle);
+		margin-bottom: 40px;
+	}
+
+	.eyebrow a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.artist-title {
+		font-size: clamp(2.6rem, 9vw, 6rem);
+	}
+
+	.artist-desc {
+		margin-top: 20px;
+		color: var(--color-text-secondary);
+	}
+
+	.links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px 20px;
+		list-style: none;
+		margin: 24px 0 0;
+		padding: 0;
+	}
+
+	.links a {
+		color: var(--color-text-secondary);
+		text-decoration: none;
+	}
+
+	.links a:hover {
+		color: var(--color-accent);
+	}
+</style>

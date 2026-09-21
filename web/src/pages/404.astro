@@ -1,0 +1,35 @@
+---
+import Base from "../layouts/Base.astro";
+
+Astro.response.status = 404;
+---
+
+<Base title="Not found" robots="noindex">
+	<section class="section">
+		<div class="container">
+			<p class="eyebrow">404</p>
+			<h1 class="display title">Not found</h1>
+			<p class="lead">お探しのページは見つかりませんでした。</p>
+			<p class="meta"><a href="/">← Home</a> &nbsp; <a href="/posts">Posts</a></p>
+		</div>
+	</section>
+</Base>
+
+<style>
+	.title {
+		font-size: clamp(2.6rem, 9vw, 6rem);
+	}
+
+	.lead {
+		color: var(--color-text-secondary);
+		margin: 20px 0 32px;
+	}
+
+	.meta a {
+		text-decoration: none;
+	}
+
+	.meta a:hover {
+		color: var(--color-accent);
+	}
+</style>

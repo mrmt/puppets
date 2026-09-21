@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /_emdash/
+
+Sitemap: https://puppets.jp/sitemap.xml

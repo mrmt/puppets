@@ -1,0 +1,147 @@
+---
+import { getEmDashEntry, getEntryTerms, getSeoMeta, decodeSlug, getSiteSettings } from "emdash";
+import { PortableText } from "emdash/ui";
+import Base from "../../layouts/Base.astro";
+import VideoPlayer from "../../components/VideoPlayer.astro";
+import PhotoGallery from "../../components/PhotoGallery.astro";
+import Embed from "../../components/Embed.astro";
+import PortableTextLink from "../../components/PortableTextLink.astro";
+import { getArtists } from "../../utils/artists";
+import { formatDate } from "../../utils/format";
+import { mediaUrl, toPhotos } from "../../utils/media";
+import { resolveBlogSiteIdentity } from "../../utils/site-identity";
+import { youtubeId, youtubeThumbnail } from "../../utils/youtube";
+
+const slug = decodeSlug(Astro.params.slug);
+const { entry: post, cacheHint } = slug ? await getEmDashEntry("posts", slug) : { entry: null, cacheHint: undefined };
+
+if (!post) {
+	return Astro.rewrite("/404");
+}
+Astro.cache.set(cacheHint);
+
+const videoId = youtubeId(post.data.video_url);
+const photos = toPhotos(post.data.photos);
+const ogImage = videoId
+	? youtubeThumbnail(videoId)
+	: (() => {
+			const url = mediaUrl(post.data.featured_image);
+			return url ? new URL(url, Astro.url.origin).href : undefined;
+		})();
+
+const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
+const seo = getSeoMeta(post, {
+	siteTitle,
+	siteUrl: Astro.url.origin,
+	path: `/posts/${post.id}`,
+	defaultOgImage: ogImage,
+});
+
+const tags = await getEntryTerms("posts", post.data.id, "tag");
+const { artists } = await getArtists();
+const tagSlugs = new Set(tags.map((t) => t.slug));
+const postArtists = artists.filter((a) => tagSlugs.has(a.data.tag));
+const artistTags = new Set(postArtists.map((a) => a.data.tag));
+const otherTags = tags.filter((t) => !artistTags.has(t.slug));
+---
+
+<Base
+	title={seo.title}
+	description={seo.description ?? post.data.excerpt}
+	image={seo.ogImage}
+	canonical={seo.canonical}
+	robots={seo.robots}
+	type="article"
+	publishedTime={post.data.publishedAt?.toISOString()}
+	modifiedTime={post.data.updatedAt?.toISOString()}
+	content={{ collection: "posts", id: post.data.id, slug: post.id }}
+>
+	<article class="section">
+		<div class="container">
+			<header class="post-head">
+				<p class="meta post-meta">
+					{post.data.publishedAt && <time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time>}
+					{postArtists.map((a) => <a href={`/artists/${a.id}`}>{a.data.name}</a>)}
+				</p>
+				<h1 class="post-title">{post.data.title}</h1>
+			</header>
+
+			{videoId && post.data.video_url && <VideoPlayer url={post.data.video_url} title={post.data.title} />}
+			{photos.length > 0 && <div class="post-photos"><PhotoGallery photos={photos} /></div>}
+
+			<div class="post-body">
+				<div class="prose">
+					<PortableText value={post.data.content} components={{ type: { embed: Embed }, mark: { link: PortableTextLink } }} />
+				</div>
+				{
+					otherTags.length > 0 && (
+						<ul class="tags meta">
+							{otherTags.map((t) => (
+								<li>
+									<a href={`/tag/${t.slug}`}>#{t.label}</a>
+								</li>
+							))}
+						</ul>
+					)
+				}
+			</div>
+		</div>
+	</article>
+</Base>
+
+<style>
+	.post-head {
+		max-width: 900px;
+		margin-bottom: 28px;
+	}
+
+	.post-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 14px;
+		margin: 0 0 10px;
+	}
+
+	.post-meta a {
+		color: var(--color-accent);
+		text-decoration: none;
+	}
+
+	.post-title {
+		font-family: var(--font-display);
+		font-weight: 500;
+		font-size: clamp(1.6rem, 4vw, 2.6rem);
+		line-height: 1.2;
+		letter-spacing: -0.01em;
+		margin: 0;
+		overflow-wrap: anywhere;
+	}
+
+	.post-photos {
+		max-width: 900px;
+	}
+
+	.post-body {
+		margin-top: 36px;
+	}
+
+	.tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px 14px;
+		list-style: none;
+		margin: 32px 0 0;
+		padding: 20px 0 0;
+		border-top: 1px solid var(--color-border-subtle);
+		max-width: var(--prose-width);
+	}
+
+	.tags a {
+		text-decoration: none;
+		text-transform: none;
+	}
+
+	.tags a:hover {
+		color: var(--color-accent);
+	}
+</style>

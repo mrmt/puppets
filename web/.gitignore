@@ -1,0 +1,14 @@
+node_modules
+dist
+.astro
+/uploads
+data.db
+.wrangler/
+data.db-shm
+data.db-wal
+.claude/settings.local.json
+test-results/
+playwright-report/
+/playwright/.cache/
+.emdash/
+.env

@@ -1,0 +1,69 @@
+---
+/**
+ * Portable Text の embed ブロック (Tumblr 投稿内の iframe 由来)。
+ * 許可したホストの iframe だけを描画し、それ以外はリンクにする
+ */
+import { youtubeEmbedUrl, youtubeId } from "../utils/youtube";
+
+interface Props {
+	node: { _type: "embed"; _key: string; url: string };
+}
+
+const ALLOWED_HOSTS: Record<string, number> = {
+	"open.spotify.com": 352,
+	"embed.music.apple.com": 450,
+};
+
+const { url } = Astro.props.node;
+const ytId = youtubeId(url);
+let host = "";
+try {
+	host = new URL(url).hostname;
+} catch {
+	host = "";
+}
+const height = ALLOWED_HOSTS[host];
+---
+
+{
+	ytId ? (
+		<div class="embed embed--video">
+			<iframe src={youtubeEmbedUrl(ytId)} title="YouTube" loading="lazy" allowfullscreen />
+		</div>
+	) : height ? (
+		<div class="embed">
+			<iframe
+				src={url}
+				height={height}
+				title={host}
+				loading="lazy"
+				allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+			/>
+		</div>
+	) : (
+		<p>
+			<a href={url} rel="noopener">{url}</a>
+		</p>
+	)
+}
+
+<style>
+	.embed {
+		margin: 1.4em 0;
+	}
+
+	.embed iframe {
+		width: 100%;
+		border: 0;
+		border-radius: 12px;
+		display: block;
+	}
+
+	.embed--video {
+		aspect-ratio: 16 / 9;
+	}
+
+	.embed--video iframe {
+		height: 100%;
+	}
+</style>

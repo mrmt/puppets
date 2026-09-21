@@ -1,0 +1,97 @@
+---
+import { getEmDashCollection } from "emdash";
+import Base from "../../layouts/Base.astro";
+import { getArtists } from "../../utils/artists";
+import { youtubeId, youtubeThumbnail } from "../../utils/youtube";
+import { mediaUrl } from "../../utils/media";
+
+const { artists, cacheHint } = await getArtists();
+Astro.cache.set(cacheHint);
+
+// 各アーティストの最新動画をカバーに使う (画像フィールドが設定されていればそちら優先)
+const items = await Promise.all(
+	artists.map(async (artist) => {
+		const { entries } = await getEmDashCollection("posts", {
+			where: { tag: artist.data.tag },
+			orderBy: { published_at: "desc" },
+		});
+		const withVideo = entries.find((p) => youtubeId(p.data.video_url));
+		const vid = withVideo ? youtubeId(withVideo.data.video_url) : null;
+		const cover = mediaUrl(artist.data.image) ?? (vid ? youtubeThumbnail(vid) : null);
+		return { artist, count: entries.length, cover };
+	}),
+);
+---
+
+<Base title="Artists" description="puppets records のアーティスト一覧">
+	<section class="section">
+		<div class="container">
+			<p class="eyebrow">Roster</p>
+			<h1 class="display page-title">Artists</h1>
+			<ul class="artist-grid">
+				{
+					items.map(({ artist, count, cover }) => (
+						<li>
+							<a href={`/artists/${artist.id}`} class="artist-card">
+								<div class="artist-cover">{cover && <img src={cover} alt="" loading="lazy" />}</div>
+								<h2 class="artist-name">{artist.data.name}</h2>
+								<p class="meta">{count} posts</p>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+</Base>
+
+<style>
+	.page-title {
+		font-size: clamp(2.4rem, 7vw, 4.5rem);
+		margin-bottom: 40px;
+	}
+
+	.artist-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 36px 24px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.artist-card {
+		display: block;
+		text-decoration: none;
+	}
+
+	.artist-cover {
+		aspect-ratio: 1;
+		background: var(--color-surface);
+		border-radius: var(--radius);
+		overflow: hidden;
+	}
+
+	.artist-cover img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: grayscale(1) contrast(1.1);
+		transition: filter 0.3s;
+	}
+
+	.artist-card:hover .artist-cover img {
+		filter: none;
+	}
+
+	.artist-name {
+		font-family: var(--font-display);
+		font-weight: 500;
+		font-size: 1.5rem;
+		margin: 14px 0 2px;
+	}
+
+	.artist-card:hover .artist-name {
+		color: var(--color-accent);
+	}
+</style>

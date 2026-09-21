@@ -1,0 +1,124 @@
+---
+import { getEmDashCollection, getSiteSettings } from "emdash";
+import Base from "../layouts/Base.astro";
+import PostCard from "../components/PostCard.astro";
+import { getArtists, withArtistLabels } from "../utils/artists";
+import { resolveBlogSiteIdentity } from "../utils/site-identity";
+
+const { artists, cacheHint } = await getArtists();
+Astro.cache.set(cacheHint);
+
+const { entries: latest } = await getEmDashCollection("posts", {
+	orderBy: { published_at: "desc" },
+	limit: 12,
+});
+const cards = await withArtistLabels(latest, artists);
+
+// アーティストごとの投稿数
+const counts = await Promise.all(
+	artists.map(async (a) => {
+		const { entries } = await getEmDashCollection("posts", { where: { tag: a.data.tag } });
+		return entries.length;
+	}),
+);
+const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings());
+---
+
+<Base title={siteTitle}>
+	<section class="hero">
+		<div class="container">
+			<p class="eyebrow">Tokyo — since 1989</p>
+			<h1 class="display hero-title">puppets<br />records</h1>
+			<p class="hero-lead">{siteTagline}</p>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="section-head">
+				<h2>Artists</h2>
+				<a href="/artists" class="meta">All artists →</a>
+			</div>
+			<ol class="roster">
+				{
+					artists.map((artist, i) => (
+						<li>
+							<a href={`/artists/${artist.id}`} class="roster-row">
+								<span class="meta roster-no">{String(i + 1).padStart(2, "0")}</span>
+								<span class="roster-name">{artist.data.name}</span>
+								<span class="meta roster-count">{counts[i]} posts</span>
+							</a>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="section-head">
+				<h2>Latest</h2>
+				<a href="/posts" class="meta">All posts →</a>
+			</div>
+			<ul class="card-grid">
+				{cards.map(({ post, label }) => <PostCard post={post} label={label} />)}
+			</ul>
+		</div>
+	</section>
+</Base>
+
+<style>
+	.hero {
+		padding-block: clamp(64px, 12vw, 160px) clamp(32px, 6vw, 72px);
+		border-bottom: 1px solid var(--color-border-subtle);
+		background:
+			linear-gradient(to bottom, transparent 0 calc(100% - 1px), var(--color-border-subtle) 0) 0 0 / 100% 48px,
+			var(--color-bg);
+	}
+
+	.hero-title {
+		font-size: clamp(3.2rem, 13vw, 10rem);
+		text-transform: lowercase;
+	}
+
+	.hero-lead {
+		margin: 24px 0 0;
+		max-width: 36ch;
+		color: var(--color-text-secondary);
+		font-size: 1.05rem;
+	}
+
+	.roster {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.roster-row {
+		display: grid;
+		grid-template-columns: 3ch 1fr auto;
+		align-items: baseline;
+		gap: 20px;
+		padding-block: 14px;
+		border-bottom: 1px solid var(--color-border-subtle);
+		text-decoration: none;
+	}
+
+	.roster-name {
+		font-family: var(--font-display);
+		font-weight: 500;
+		font-size: clamp(1.4rem, 4vw, 2.4rem);
+		letter-spacing: -0.01em;
+		line-height: 1.15;
+		transition: color 0.15s;
+	}
+
+	.roster-row:hover .roster-name {
+		color: var(--color-accent);
+	}
+
+	.roster-row:hover .roster-no {
+		color: var(--color-accent);
+	}
+</style>

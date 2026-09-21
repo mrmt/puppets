@@ -1,0 +1,73 @@
+---
+import Base from "../layouts/Base.astro";
+---
+
+<Base title="Privacy Policy">
+	<section class="section">
+		<div class="container prose">
+			<p class="eyebrow">Privacy</p>
+			<h1 class="display title">Privacy Policy</h1>
+
+			<p>URL of this site is https://puppets.jp.</p>
+
+			<h2>Analytics</h2>
+			<p>
+				This site uses Cloudflare Web Analytics to understand overall traffic trends. Cloudflare Web Analytics does not use
+				cookies, does not collect or store any personal data (such as your IP address for tracking purposes), does not
+				fingerprint your device, and does not track you across websites. For details, see
+				<a href="https://www.cloudflare.com/web-analytics/" rel="noopener">Cloudflare's privacy documentation</a>.
+			</p>
+			<p>Because this site sets no cookies for analytics or advertising, no cookie consent banner is displayed.</p>
+
+			<h2>Embedded content</h2>
+			<p>
+				Pages on this site may include embedded content (e.g. videos from YouTube, music players, images, articles, etc.).
+				Embedded content from other websites behaves in the exact same way as if you had visited the other website. These
+				websites may collect data about you, use cookies, embed additional third-party tracking, and monitor your
+				interaction with that embedded content, including tracking your interaction if you have an account and are logged
+				in to that website. Please refer to the privacy policies of those services for details.
+			</p>
+
+			<hr />
+
+			<p>このサイトの URL は https://puppets.jp です。</p>
+
+			<h2>アクセス解析について</h2>
+			<p>
+				このサイトでは、全体的なアクセス傾向を把握するために Cloudflare Web Analytics を使用しています。Cloudflare Web
+				Analytics は Cookie を使用せず、個人データ (トラッキング目的の IP アドレスなど)
+				の収集・保存を行わず、デバイスのフィンガープリンティングやサイトをまたいだ追跡も行いません。詳細は
+				<a href="https://www.cloudflare.com/web-analytics/" rel="noopener">Cloudflare のプライバシーに関するドキュメント</a
+				>をご覧ください。
+			</p>
+			<p>このサイトは解析・広告目的の Cookie を一切設定しないため、Cookie 同意バナーは表示していません。</p>
+
+			<h2>埋め込みコンテンツについて</h2>
+			<p>
+				このサイトのページには埋め込みコンテンツ (YouTube の動画、音楽プレイヤー、画像、投稿など)
+				が含まれることがあります。他サイトからの埋め込みコンテンツは、訪問者がそのサイトを訪れた場合とまったく同じように振る舞います。これらのサイトは、あなたのデータの収集、Cookie
+				の使用、サードパーティによる追加トラッキングの埋め込み、埋め込みコンテンツとのやりとりの監視を行うことがあります。アカウントを使ってそのサイトにログイン中の場合、埋め込みコンテンツとのやりとりのトラッキングも含まれます。詳細は各サービスのプライバシーポリシーをご確認ください。
+			</p>
+
+			<p class="meta">Last updated: 2026.09.21</p>
+		</div>
+	</section>
+</Base>
+
+<style>
+	.title {
+		font-size: clamp(2.2rem, 6vw, 3.6rem);
+		margin-bottom: 32px;
+	}
+
+	.prose p {
+		white-space: normal;
+		color: var(--color-text-secondary);
+	}
+
+	hr {
+		border: 0;
+		border-top: 1px solid var(--color-border);
+		margin: 48px 0;
+	}
+</style>
