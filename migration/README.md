@@ -1,5 +1,7 @@
 # puppets.jp Tumblr → EmDash 移行
 
+**完了 (2026/09/21)**: puppets.jp は EmDash で配信中。Tumblr ブログ (puppetsmedia) は削除済み。
+
 Tumblr (puppetsmedia) から EmDash (Cloudflare Workers) への移行記録。構成は metafictions.net / sect-commune.com と同じ。
 
 ## 決定事項 (2026/09/21)
@@ -77,3 +79,15 @@ EmDash の CLI seed はローカル SQLite 専用で、セットアップウィ�
 - Tumblr 同期ツール (`scripts/sync.py` / `auth.py` / `client.py`、`.tumblr-manifest.json`) を削除した。必要なら git 履歴から参照できる
 - `content/` を `migration/tumblr-export/` に移動した
 - `scripts/tumblr_to_seed.py` は Tumblr API を使わず、`media-urls.json` と `media/` だけで再生成できるようにした
+
+## 完了 (2026/09/21)
+
+- DNS を Cloudflare に移し、puppets.jp を Worker `puppets-web` のカスタムドメインにした (Route 53 は廃止)
+- 管理者 (パスキー) をセットアップした
+- 旧 URL を検証し 120/120 OK (`verify_legacy_urls.py https://puppets.jp`)
+- Tumblr ブログ puppetsmedia を所有者アカウントで削除した。削除後の確認:
+  - puppetsmedia.tumblr.com は 404
+  - puppets.jp は 200
+  - 旧 URL の 301→200 は 120/120 OK
+  - サイト内に tumblr.com への参照は無し
+- 以後の投稿は https://puppets.jp/_emdash/admin で行う。OGP・カード用の画像は `scripts/backfill_og_images.py` で featured_image に保存する
