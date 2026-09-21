@@ -407,7 +407,6 @@ def main():
                     {"slug": "video_url", "label": "YouTube URL", "type": "string"},
                     {"slug": "featured_image", "label": "Featured Image", "type": "image"},
                     {"slug": "photos", "label": "Photos", "type": "json"},
-                    {"slug": "og_image", "label": "OGP Image", "type": "image"},
                     {"slug": "content", "label": "Content", "type": "portableText", "searchable": True},
                     {"slug": "excerpt", "label": "Excerpt", "type": "text"},
                 ],
