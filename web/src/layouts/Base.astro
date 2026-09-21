@@ -64,8 +64,7 @@ const year = new Date().getFullYear();
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<Font cssVariable="--font-display" preload />
-		<Font cssVariable="--font-sans" preload />
+		<Font cssVariable="--font-sans" preload={[{ subset: "latin", weight: "400" }]} />
 		<Font cssVariable="--font-mono" />
 		<title>{fullTitle}</title>
 		<link rel="icon" href={siteFavicon ?? "/favicon.svg"} />

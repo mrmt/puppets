@@ -23,16 +23,9 @@ export default defineConfig({
 	fonts: [
 		{
 			provider: fontProviders.google(),
-			name: "Space Grotesk",
-			cssVariable: "--font-display",
-			weights: [500, 700],
-			fallbacks: ["sans-serif"],
-		},
-		{
-			provider: fontProviders.google(),
-			name: "Inter",
+			name: "M PLUS 1p",
 			cssVariable: "--font-sans",
-			weights: [400, 500, 600],
+			weights: [400, 500, 700, 800],
 			fallbacks: ["sans-serif"],
 		},
 		{
