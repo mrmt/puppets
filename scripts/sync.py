@@ -79,26 +79,32 @@ def refresh_access_token(token: dict) -> dict | None:
         return None
 
 
-def make_client() -> httpx.Client:
-    token = load_token()
-    return httpx.Client(
-        headers={"Authorization": f"Bearer {token['access_token']}"},
-        timeout=60,
-        event_hooks={"response": [_handle_auth_error]},
-    )
+class TumblrAuth(httpx.Auth):
+    """Bearer 認証。401 を受け取ったらトークンをリフレッシュして再送信する(1回のみ)"""
 
+    # 再送信のためリクエストボディ(multipart のファイル含む)をバッファしておく
+    requires_request_body = True
 
-def _handle_auth_error(response: httpx.Response):
-    """401 を受け取ったらトークンをリフレッシュして再試行（1回のみ）"""
-    if response.status_code == 401 and not getattr(response.request, "_refreshed", False):
-        token = load_token()
-        new_token = refresh_access_token(token)
-        if new_token:
-            response.request.headers["Authorization"] = f"Bearer {new_token['access_token']}"
-            response.request._refreshed = True  # type: ignore[attr-defined]
-        else:
+    def __init__(self, token: dict):
+        self.token = token
+
+    def auth_flow(self, request: httpx.Request):
+        request.headers["Authorization"] = f"Bearer {self.token['access_token']}"
+        response = yield request
+        if response.status_code != 401:
+            return
+
+        new_token = refresh_access_token(self.token)
+        if not new_token:
             print("トークンの更新に失敗しました。scripts/auth.py を再実行してください。")
             sys.exit(1)
+        self.token = new_token
+        request.headers["Authorization"] = f"Bearer {new_token['access_token']}"
+        yield request
+
+
+def make_client() -> httpx.Client:
+    return httpx.Client(auth=TumblrAuth(load_token()), timeout=60)
 
 
 # --- マニフェスト管理 ---
