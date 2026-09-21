@@ -26,11 +26,10 @@
 			"id": "ecd374130792456d959b2661b4c8b84d",
 		},
 	],
-	// DNS 切替時に有効化する
-	// "routes": [
-	// 	{
-	// 		"pattern": "puppets.jp",
-	// 		"custom_domain": true,
-	// 	},
-	// ],
+	"routes": [
+		{
+			"pattern": "puppets.jp",
+			"custom_domain": true,
+		},
+	],
 }
