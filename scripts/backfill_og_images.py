@@ -94,7 +94,8 @@ def image_for_link(link: str) -> str | None:
         thumb = r.json().get("thumbnail_url") if r.status_code == 200 else None
         # oEmbed のサムネイルは 300px。同じ画像の 640px 版 (ab67616d0000b273) に置き換える
         return thumb.replace("ab67616d00001e02", "ab67616d0000b273") if thumb else None
-    if host.endswith("music.apple.com"):
+    # サブドメインは "." 区切りで判定する (evilmusic.apple.com のような偽装ホストを弾く)
+    if host == "music.apple.com" or host.endswith(".music.apple.com"):
         m = re.search(r"[?&]i=(\d+)", link) or re.search(r"/(\d+)/?(?:\?|$)", link)
         if not m:
             return None

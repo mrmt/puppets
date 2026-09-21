@@ -16,6 +16,10 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+# GITHUB_TOKEN は読み取りのみ (チェックアウト用)。Cloudflare 操作は専用シークレットを使う
+permissions:
+  contents: read
+
 jobs:
   check:
     name: Typecheck + Unit tests
