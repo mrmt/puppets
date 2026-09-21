@@ -10,6 +10,10 @@ concurrency:
   group: backup
   cancel-in-progress: false
 
+# GITHUB_TOKEN は読み取りのみ (チェックアウト用)。Cloudflare 操作は専用シークレットを使う
+permissions:
+  contents: read
+
 jobs:
   backup:
     runs-on: ubuntu-latest
