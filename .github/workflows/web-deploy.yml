@@ -1,0 +1,81 @@
+name: Deploy to Cloudflare Workers
+
+on:
+  push:
+    branches:
+      - main
+    # web/ 配下とこの workflow 自身の変更でのみデプロイする
+    paths:
+      - "web/**"
+      - ".github/workflows/web-deploy.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      deployments: write
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 12
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Restore font cache
+        id: font-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: web/node_modules/.astro/fonts
+          key: astro-fonts-${{ runner.os }}-${{ hashFiles('web/astro.config.mjs', 'web/pnpm-lock.yaml') }}-${{ github.run_id }}
+          restore-keys: |
+            astro-fonts-${{ runner.os }}-${{ hashFiles('web/astro.config.mjs', 'web/pnpm-lock.yaml') }}-
+            astro-fonts-${{ runner.os }}-
+
+      - name: Build
+        run: pnpm exec astro build
+        env:
+          # Cloudflare Web Analytics (ビルド時に埋め込み。未設定ならビーコン無し)
+          PUBLIC_CF_BEACON_TOKEN: ${{ secrets.PUBLIC_CF_BEACON_TOKEN }}
+
+      - name: Save font cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: web/node_modules/.astro/fonts
+          key: ${{ steps.font-cache.outputs.cache-primary-key }}
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: web
+          command: deploy

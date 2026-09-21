@@ -1,0 +1,96 @@
+name: Backup (D1 snapshot + R2 mirror)
+
+on:
+  schedule:
+    # 毎日 18:00 UTC (JST 03:00)
+    - cron: "0 18 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: web
+    env:
+      # D1 操作 (execute/export): CLOUDFLARE_API_TOKEN (デプロイと共用、D1 権限あり)
+      # R2 操作 (SQL upload + media mirror): 全て rclone (S3 互換キー) で統一
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 12
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install and configure rclone
+        env:
+          R2_ACCESS_KEY_ID: ${{ secrets.CLOUDFLARE_R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.CLOUDFLARE_R2_SECRET_ACCESS_KEY }}
+        run: |
+          curl -fsSL https://rclone.org/install.sh | sudo bash
+          mkdir -p ~/.config/rclone
+          cat > ~/.config/rclone/rclone.conf <<EOF
+          [r2]
+          type = s3
+          provider = Cloudflare
+          access_key_id = ${R2_ACCESS_KEY_ID}
+          secret_access_key = ${R2_SECRET_ACCESS_KEY}
+          endpoint = https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com
+          acl = private
+          EOF
+
+      - name: Compute snapshot name
+        id: name
+        run: |
+          DATE=$(date -u +%Y%m%d)
+          YM=$(date -u +%Y/%m)
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          echo "key=$YM/backup-$DATE.sql" >> "$GITHUB_OUTPUT"
+          echo "file=backup-$DATE.sql" >> "$GITHUB_OUTPUT"
+
+      - name: Export D1 SQL dump from prod
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          # FTS5 virtual table (_emdash_fts_*) を除外して実テーブルだけを export
+          # (wrangler d1 export は virtual table 非対応。FTS は復元時に再構築)
+          npx wrangler d1 execute puppets-web --remote --json \
+            --command "SELECT name FROM sqlite_master WHERE type='table' AND sql IS NOT NULL AND sql NOT LIKE 'CREATE VIRTUAL%';" \
+            > tables.json
+          # wrangler の出力は [{results:[...]}] または {result:[{results:[...]}]}
+          # の両形式があるので recursive descent で results 配列を拾う
+          TABLES=$(jq -r '[.. | objects | select(.results) | .results[].name] | unique | .[]' tables.json)
+          TABLE_ARGS=""
+          for t in $TABLES; do TABLE_ARGS="$TABLE_ARGS --table=$t"; done
+          echo "Exporting tables:$TABLE_ARGS"
+          npx wrangler d1 export puppets-web \
+            --remote --output "${{ steps.name.outputs.file }}" $TABLE_ARGS
+
+      - name: Upload snapshot to puppets-backups
+        run: |
+          rclone copyto "${{ steps.name.outputs.file }}" \
+            "r2:puppets-backups/${{ steps.name.outputs.key }}" \
+            --s3-no-check-bucket --stats 30s
+
+      - name: Mirror media R2 -> backup R2
+        run: |
+          rclone sync r2:puppets-media r2:puppets-media-backup \
+            --fast-list --transfers 8 --checkers 16 --stats 30s

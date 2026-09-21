@@ -1,0 +1,41 @@
+---
+import { getTerm, getEmDashCollection, decodeSlug } from "emdash";
+import Base from "../../layouts/Base.astro";
+import PostCard from "../../components/PostCard.astro";
+import { getArtists, withArtistLabels } from "../../utils/artists";
+
+const slug = decodeSlug(Astro.params.slug);
+const term = slug ? await getTerm("tag", slug) : null;
+
+if (!term) {
+	return Astro.rewrite("/404");
+}
+
+const { entries: posts, cacheHint } = await getEmDashCollection("posts", {
+	where: { tag: term.slug },
+	orderBy: { published_at: "desc" },
+});
+Astro.cache.set(cacheHint);
+const { artists } = await getArtists();
+const cards = await withArtistLabels(posts, artists);
+---
+
+<Base title={`#${term.label}`} description={`Posts tagged ${term.label}`}>
+	<section class="section">
+		<div class="container">
+			<p class="eyebrow">Tag / {posts.length} posts</p>
+			<h1 class="display page-title">#{term.label}</h1>
+			<ul class="card-grid">
+				{cards.map(({ post, label }) => <PostCard post={post} label={label} />)}
+			</ul>
+		</div>
+	</section>
+</Base>
+
+<style>
+	.page-title {
+		font-size: clamp(2rem, 6vw, 4rem);
+		margin-bottom: 40px;
+		overflow-wrap: anywhere;
+	}
+</style>

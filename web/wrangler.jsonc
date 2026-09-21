@@ -1,0 +1,36 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "puppets-web",
+	"main": "./src/worker.ts",
+	"compatibility_date": "2026-02-24",
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"workers_dev": true,
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "puppets-web",
+			"database_id": "099499c3-9a91-4337-b0bf-b542fcff54e7",
+		},
+	],
+	"r2_buckets": [
+		{
+			"binding": "MEDIA",
+			"bucket_name": "puppets-media",
+		},
+	],
+	"kv_namespaces": [
+		{
+			"binding": "SESSION",
+			"id": "ecd374130792456d959b2661b4c8b84d",
+		},
+	],
+	// DNS 切替時に有効化する
+	// "routes": [
+	// 	{
+	// 		"pattern": "puppets.jp",
+	// 		"custom_domain": true,
+	// 	},
+	// ],
+}

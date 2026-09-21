@@ -1,0 +1,260 @@
+---
+import { getMenu, getSiteSettings } from "emdash";
+import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
+import { createPublicPageContext } from "emdash/page";
+import LiveSearch from "emdash/ui/search";
+import { Font } from "astro:assets";
+import { resolveBlogSiteIdentity } from "../utils/site-identity";
+import "../styles/theme.css";
+
+interface Props {
+	title: string;
+	pageTitle?: string | null;
+	description?: string | null;
+	image?: string | null;
+	canonical?: string | null;
+	robots?: string | null;
+	type?: "website" | "article";
+	publishedTime?: string | null;
+	modifiedTime?: string | null;
+	/** Pass content reference for plugin page contributions on content pages */
+	content?: { collection: string; id: string; slug?: string | null };
+}
+
+const {
+	title,
+	pageTitle,
+	description,
+	image,
+	canonical,
+	robots,
+	type = "website",
+	publishedTime,
+	modifiedTime,
+	content,
+} = Astro.props;
+const { siteTitle, siteTagline, siteFavicon } = resolveBlogSiteIdentity(await getSiteSettings());
+const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
+
+const menu = await getMenu("primary");
+
+const pageCtx = createPublicPageContext({
+	Astro,
+	kind: content ? "content" : "custom",
+	pageType: type,
+	title: fullTitle,
+	pageTitle: pageTitle ?? title,
+	description: description ?? siteTagline,
+	canonical,
+	image,
+	content,
+	seo: { ogImage: image, robots },
+	articleMeta: { publishedTime, modifiedTime },
+	siteName: siteTitle,
+});
+
+const isLoggedIn = !!Astro.locals.user;
+const currentPath = Astro.url.pathname;
+const isCurrent = (url: string) => url !== "/" && (currentPath === url || currentPath.startsWith(`${url}/`));
+const year = new Date().getFullYear();
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<Font cssVariable="--font-display" preload />
+		<Font cssVariable="--font-sans" preload />
+		<Font cssVariable="--font-mono" />
+		<title>{fullTitle}</title>
+		<link rel="icon" href={siteFavicon ?? "/favicon.svg"} />
+		<link rel="alternate" type="application/rss+xml" title={siteTitle} href="/rss.xml" />
+		<EmDashHead page={pageCtx} />
+		{
+			/* Cloudflare Web Analytics (Cookie レス)。トークン設定時のみ有効 */
+			import.meta.env.PUBLIC_CF_BEACON_TOKEN && (
+				<script
+					is:inline
+					defer
+					src="https://static.cloudflareinsights.com/beacon.min.js"
+					data-cf-beacon={JSON.stringify({ token: import.meta.env.PUBLIC_CF_BEACON_TOKEN })}
+				/>
+			)
+		}
+	</head>
+	<body>
+		<EmDashBodyStart page={pageCtx} />
+		<header class="site-header">
+			<div class="container header-inner">
+				<a href="/" class="brand" aria-label={`${siteTitle} ホーム`}>
+					<span class="brand-mark" aria-hidden="true"></span>
+					<span class="brand-name">{siteTitle}</span>
+				</a>
+				<nav class="nav" aria-label="メイン">
+					{
+						menu?.items.map((item) => (
+							<a href={item.url} target={item.target} aria-current={isCurrent(item.url) ? "page" : undefined}>
+								{item.label}
+							</a>
+						))
+					}
+					<div class="nav-search">
+						<LiveSearch placeholder="Search" collections={["posts"]} />
+					</div>
+					{isLoggedIn && <a href="/_emdash/admin" class="nav-admin">Admin</a>}
+				</nav>
+			</div>
+		</header>
+
+		<main>
+			<slot />
+		</main>
+
+		<footer class="site-footer">
+			<div class="container footer-inner">
+				<div>
+					<p class="footer-brand">{siteTitle}</p>
+					<p class="meta">{siteTagline}</p>
+				</div>
+				<ul class="footer-links meta">
+					<li><a href="/artists">Artists</a></li>
+					<li><a href="/posts">Posts</a></li>
+					<li><a href="/rss.xml">RSS</a></li>
+					<li><a href="https://www.youtube.com/@puppetsrecords" rel="noopener">YouTube</a></li>
+					<li><a href="/privacy">Privacy</a></li>
+				</ul>
+				<p class="meta copyright">&copy; {year} puppets records</p>
+			</div>
+		</footer>
+		<EmDashBodyEnd page={pageCtx} />
+	</body>
+</html>
+
+<style>
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 20;
+		background: color-mix(in srgb, var(--color-bg) 88%, transparent);
+		backdrop-filter: blur(10px);
+		border-bottom: 1px solid var(--color-border-subtle);
+	}
+
+	.header-inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		min-height: 64px;
+		flex-wrap: wrap;
+		padding-block: 8px;
+	}
+
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		text-decoration: none;
+	}
+
+	/* 糸で吊られた四角 = puppet のモチーフ */
+	.brand-mark {
+		position: relative;
+		width: 14px;
+		height: 14px;
+		background: var(--color-accent);
+		margin-top: 8px;
+	}
+
+	.brand-mark::before {
+		content: "";
+		position: absolute;
+		left: 50%;
+		bottom: 100%;
+		width: 1px;
+		height: 10px;
+		background: var(--color-text-secondary);
+	}
+
+	.brand-name {
+		font-family: var(--font-display);
+		font-weight: 700;
+		font-size: 1.05rem;
+		letter-spacing: 0.02em;
+		text-transform: lowercase;
+	}
+
+	.nav {
+		display: flex;
+		align-items: center;
+		gap: 22px;
+		flex-wrap: wrap;
+	}
+
+	.nav a {
+		font-family: var(--font-mono), monospace;
+		font-size: 0.8rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		text-decoration: none;
+		color: var(--color-text-secondary);
+	}
+
+	.nav a:hover,
+	.nav a[aria-current="page"] {
+		color: var(--color-text);
+	}
+
+	.nav a[aria-current="page"] {
+		box-shadow: inset 0 -2px 0 var(--color-accent);
+	}
+
+	.nav-search {
+		width: 180px;
+		max-width: 100%;
+	}
+
+	.site-footer {
+		border-top: 1px solid var(--color-border);
+		margin-top: 64px;
+		padding-block: 40px;
+	}
+
+	.footer-inner {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 24px;
+	}
+
+	.footer-brand {
+		font-family: var(--font-display);
+		font-weight: 700;
+		text-transform: lowercase;
+		margin: 0 0 4px;
+	}
+
+	.footer-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.footer-links a {
+		text-decoration: none;
+	}
+
+	.footer-links a:hover {
+		color: var(--color-accent);
+	}
+
+	.copyright {
+		width: 100%;
+		margin: 0;
+	}
+</style>
