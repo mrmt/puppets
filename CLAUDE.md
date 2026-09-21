@@ -4,101 +4,54 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## プロジェクト概要
 
-[puppets.jp](https://puppets.jp) の運営リポジトリ。静的HTMLのイベント告知ページと、TumblrブログのMarkdownベースコンテンツ管理の2軸で構成される。ビルドツール・テストフレームワークは存在しない。
+[puppets.jp](https://puppets.jp) (puppets records) の運営リポジトリ。サイトは Astro + EmDash を Cloudflare Workers (D1 / R2 / KV) で配信している。metafictions.net / sect-commune.com と同じ構成。
+
+2026/09 に Tumblr から移行した。Tumblr ブログは削除済み。
 
 ## 構造
 
 ```
 puppets/
-├── content/
-│   └── posts/              # Tumblr投稿のMarkdownファイル（YAML frontmatter付き）
-├── custom-pages/
-│   └── fa/index.html       # Fourier Analyzeイベント告知ページ（静的HTML）
+├── web/                    # サイト実装 (Astro + EmDash)。作業時は web/CLAUDE.md (= AGENTS.md) を参照
 ├── scripts/
-│   ├── auth.py             # OAuth 2.0認証（初回・トークン期限切れ時のみ実行）
-│   ├── client.py           # Tumblr API直接操作CLI（デバッグ・確認用）
-│   └── sync.py             # Tumblr ↔ ローカルの双方向同期エンジン
-└── .tumblr-manifest.json   # 同期状態トラッキング（手動編集不可）
+│   ├── tumblr_to_seed.py   # Tumblr 投稿アーカイブ → EmDash seed 変換 (移行用、再実行は通常不要)
+│   ├── verify_legacy_urls.py  # 旧 Tumblr URL が 301→200 になるかの機械検証
+│   └── order_d1_dump.py    # wrangler d1 export の出力を外部キー順に並べ替え
+├── migration/              # 移行記録 (README.md)、Tumblr 投稿のアーカイブ、Tumblr ホスト画像の原本
+└── .github/workflows/      # web-ci / web-deploy / web-backup / web-link-check
 ```
 
-## ローカル確認（静的サイト）
+## 記事本文はこのリポジトリに無い
+
+投稿・アーティスト・タグの正本は Cloudflare D1 (EmDash CMS)、画像は R2 にある。
+
+- 投稿・編集: https://puppets.jp/_emdash/admin (パスキー認証)
+- `web/seed/seed.json` は移行時の初期投入データ。現在の内容とは一致しない
+- `migration/tumblr-export/` は Tumblr 時代のアーカイブ (読み取り専用)
+
+## サイト実装 (web/)
 
 ```bash
-python -m http.server 8000
-# ブラウザで http://localhost:8000/custom-pages/fa/ を開く
+cd web
+pnpm install
+pnpm exec astro dev   # http://localhost:4321
+pnpm typecheck
+pnpm test             # vitest
+pnpm test:e2e         # playwright
 ```
 
-## Tumblr コンテンツ管理
+- デプロイ: `main` への push (`web/**`) で `.github/workflows/web-deploy.yml` が実行する。ルート直下を変更しても再デプロイされない
+- 旧 Tumblr URL (`/post/{id}/…`, `/tagged/…`, `/rss`, `/archive`, `/page/n`) は `web/src/utils/legacy.ts` が 301 で新 URL へ解決する
+  - 対応表は `web/src/utils/tumblr-id-map.json`
+  - 変更したら `uv run scripts/verify_legacy_urls.py https://puppets.jp` で確認する
 
-### 初回セットアップ
+## Cloudflare
 
-```bash
-uv run scripts/auth.py       # 1Password CLI経由でOAuth認証、トークンをKeychain保存
-uv run scripts/sync.py pull  # Tumblrから全件ダウンロード
-```
+- アカウント: 852a5c2aca3a6ca2e6258627e78e86c8 (metafictions / sect-commune と共用)
+- Worker `puppets-web`、D1 `puppets-web`、R2 `puppets-media`、KV `puppets-web-SESSION`
+- DNS: puppets.jp ゾーンは Cloudflare。Worker のカスタムドメインとして割り当てている
+- バックアップ: `web-backup.yml` が毎日 D1 dump を `puppets-backups` に保存し、R2 を `puppets-media-backup` にミラーする
 
-`auth.py` はポート3000でローカルHTTPサーバーを起動してOAuthコールバックを受け取る。PKCE方式。
+## スクリプト
 
-### 日常の操作
-
-```bash
-uv run scripts/sync.py status         # ローカルの変更状況を確認（API呼び出しなし）
-uv run scripts/sync.py push --dry-run # 反映内容のプレビュー
-uv run scripts/sync.py push           # Tumblrへ反映
-uv run scripts/sync.py pull           # Tumblrの最新状態をローカルへ同期
-```
-
-### 新規投稿の作り方
-
-`content/posts/new_ファイル名.md` を作成する（`new_` プレフィックスが必須）。`push` 後に `{id}_{type}_{slug}.md` へ自動リネームされる。
-
-**テキスト投稿:**
-```markdown
----
-id: null
-type: text
-title: タイトル
-tags: [tag1, tag2]
-state: published
----
-
-本文をMarkdownで書く
-```
-
-**画像投稿:**
-```markdown
----
-id: null
-type: photo
-tags: [photo]
-state: published
-photos:
-  - local_path: "images/photo.jpg"
-    alt_text: ""
----
-
-キャプション
-```
-
-対応投稿タイプ: `text` / `photo` / `video` / `quote` / `link`
-
-### 既存投稿の編集・削除
-
-- **編集**: `content/posts/*.md` を直接編集 → `push`
-- **削除**: ファイルを削除 → `push`（確認プロンプトあり）
-
-## スクリプトアーキテクチャ
-
-スクリプトはPEP 723形式（ファイル先頭に `# /// script` でインライン依存定義）。`pyproject.toml` は存在しない。
-
-**同期の仕組み（sync.py）**
-
-- `.tumblr-manifest.json` がすべての同期状態を管理する。スキーマ: `{ schema_version, last_pull, posts: { post_id: { file, content_hash, tumblr_updated_at, synced_at } } }`
-- `status` / `push` はマニフェストのcontent_hashと現在のファイルを比較してdiffを検出（API不要）
-- `push` 時に401が返るとrefresh_tokenで自動再認証
-- API呼び出しは0.2秒インターバルでレート制限
-
-**認証（auth.py）**
-
-- Consumer Key/Secretは1Password CLI（`op`）から取得
-- アクセストークンはmacOSのKeychainに保存（`keyring` ライブラリ経由）
+Python スクリプトは PEP 723 形式 (ファイル先頭の `# /// script` で依存を定義) で、`uv run` で実行する。`pyproject.toml` は無い。

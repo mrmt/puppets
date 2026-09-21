@@ -4,16 +4,16 @@
 # dependencies = [
 #   "python-frontmatter",
 #   "python-slugify",
-#   "httpx",
-#   "keyring",
 # ]
 # ///
 """
-Tumblr 投稿 (content/posts/*.md) を EmDash の seed に変換する移行スクリプト
+Tumblr 投稿アーカイブ (migration/tumblr-export/posts/*.md) を EmDash の seed に変換する移行スクリプト
+
+移行は完了済み (2026/09)。Tumblr ブログは削除したため、写真投稿の原寸 URL は
+migration/media-urls.json のキャッシュ、画像本体は migration/media/ の原本を使う。
 
 使い方:
-  uv run scripts/tumblr_to_seed.py            # seed 生成 (画像は Tumblr API で原寸 URL を解決)
-  uv run scripts/tumblr_to_seed.py --offline  # API を使わず migration/media-urls.json のキャッシュのみで生成
+  uv run scripts/tumblr_to_seed.py
 
 出力:
   web/seed/seed.json                 スキーマ + 全投稿 + アーティスト
@@ -26,16 +26,14 @@ Tumblr 投稿 (content/posts/*.md) を EmDash の seed に変換する移行ス�
 import html
 import json
 import re
-import sys
 from html.parser import HTMLParser
 from pathlib import Path
 
 import frontmatter
-import httpx
 from slugify import slugify
 
 ROOT = Path(__file__).resolve().parent.parent
-POSTS_DIR = ROOT / "content/posts"
+POSTS_DIR = ROOT / "migration/tumblr-export/posts"
 SEED_PATH = ROOT / "web/seed/seed.json"
 SQL_PATH = ROOT / "web/seed/published-at.sql"
 ID_MAP_PATH = ROOT / "web/src/utils/tumblr-id-map.json"
@@ -238,29 +236,11 @@ def largest_srcset_url(img_src: str, body: str) -> str:
     return img_src
 
 
-def fetch_photo_urls(post_id: str) -> list[dict]:
-    """Tumblr API から photo 投稿の原寸画像 URL を取得する"""
-    sys.path.insert(0, str(ROOT / "scripts"))
-    from sync import API_BASE, BLOG_IDENTIFIER, make_client  # noqa: E402
-
-    with make_client() as client:
-        resp = client.get(f"{API_BASE}/blog/{BLOG_IDENTIFIER}/posts", params={"id": post_id})
-        resp.raise_for_status()
-        post = resp.json()["response"]["posts"][0]
-    return [
-        {"url": p["original_size"]["url"], "alt": p.get("caption") or ""}
-        for p in post.get("photos", [])
-    ]
-
-
-def download(url: str) -> Path:
-    MEDIA_DIR.mkdir(parents=True, exist_ok=True)
-    name = "-".join(url.split("/")[-3:])  # hash-size-file で一意化
-    dest = MEDIA_DIR / name
+def cached_media(url: str) -> Path:
+    """Tumblr 画像 URL に対応する migration/media/ の原本 (無ければ失敗)"""
+    dest = MEDIA_DIR / "-".join(url.split("/")[-3:])  # hash-size-file で一意化
     if not dest.exists():
-        resp = httpx.get(url, timeout=60, follow_redirects=True)
-        resp.raise_for_status()
-        dest.write_bytes(resp.content)
+        raise SystemExit(f"画像の原本が見つからない: {dest}")
     return dest
 
 
@@ -315,7 +295,6 @@ def tag_slug(tag: str) -> str:
 
 
 def main():
-    offline = "--offline" in sys.argv
     media_urls: dict = json.loads(MEDIA_URLS_PATH.read_text()) if MEDIA_URLS_PATH.exists() else {}
 
     files = sorted(POSTS_DIR.glob("[0-9]*.md"))
@@ -340,13 +319,11 @@ def main():
         photo_urls = []
         if meta["type"] == "photo":
             if post_id not in media_urls:
-                if offline:
-                    raise SystemExit(f"--offline だが画像 URL キャッシュが無い: {post_id}")
-                media_urls[post_id] = fetch_photo_urls(post_id)
+                raise SystemExit(f"画像 URL キャッシュが無い: {post_id}")
             photo_urls = media_urls[post_id]
         photo_urls += [{"url": largest_srcset_url(src, body), "alt": ""} for src in inline_images]
         for p in photo_urls:
-            download(p["url"])
+            cached_media(p["url"])
 
         title = derive_title(meta, blocks, f"post-{post_id}")
         slug = make_slug(meta, title, post_id, used_slugs)
@@ -386,9 +363,6 @@ def main():
             entry["taxonomies"] = {"tag": term_slugs}
         entries.append(entry)
         sql_lines.append(f"UPDATE ec_posts SET published_at = '{published_at}' WHERE slug = '{slug}';")
-
-    MEDIA_URLS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    MEDIA_URLS_PATH.write_text(json.dumps(media_urls, ensure_ascii=False, indent=2) + "\n")
 
     artists = []
     for i, a in enumerate(ARTISTS):
