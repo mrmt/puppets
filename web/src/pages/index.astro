@@ -3,6 +3,7 @@ import { getEmDashCollection, getSiteSettings } from "emdash";
 import Base from "../layouts/Base.astro";
 import PostCard from "../components/PostCard.astro";
 import { getArtists, withArtistLabels } from "../utils/artists";
+import { mediaUrl } from "../utils/media";
 import { resolveBlogSiteIdentity } from "../utils/site-identity";
 
 const { artists, cacheHint } = await getArtists();
@@ -45,6 +46,9 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings
 						<li>
 							<a href={`/artists/${artist.id}`} class="roster-row">
 								<span class="meta roster-no">{String(i + 1).padStart(2, "0")}</span>
+								<span class="roster-thumb" aria-hidden="true">
+									{mediaUrl(artist.data.image) && <img src={mediaUrl(artist.data.image)} alt="" loading="lazy" decoding="async" />}
+								</span>
 								<span class="roster-name">{artist.data.name}</span>
 								<span class="meta roster-count">{counts[i]} posts</span>
 							</a>
@@ -110,12 +114,33 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings
 
 	.roster-row {
 		display: grid;
-		grid-template-columns: 3ch 1fr auto;
-		align-items: baseline;
+		grid-template-columns: 3ch auto 1fr auto;
+		align-items: center;
 		gap: 20px;
 		padding-block: 14px;
 		border-bottom: 1px solid var(--color-border-subtle);
 		text-decoration: none;
+	}
+
+	/* アーティスト画像 (Image プロパティ) の小さなサムネイル */
+	.roster-thumb {
+		width: clamp(36px, 5vw, 52px);
+		aspect-ratio: 1;
+		border-radius: var(--radius);
+		overflow: hidden;
+		background: var(--color-surface);
+	}
+
+	.roster-thumb img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		filter: grayscale(1) contrast(1.05);
+		transition: filter 0.2s;
+	}
+
+	.roster-row:hover .roster-thumb img {
+		filter: none;
 	}
 
 	.roster-name {
