@@ -4,10 +4,11 @@
 # dependencies = ["httpx"]
 # ///
 """
-投稿の OGP 画像 (og_image フィールド) を、コンテンツの素材から取得して EmDash のメディアに保存する
+投稿のアイキャッチ (featured_image) が空の投稿に、コンテンツの素材から画像を取得して EmDash のメディアとして設定する。
+featured_image はカードのサムネイルと OGP 画像に使われる。
 
 外部サービスの画像は消えたり差し替わったりするため、一度取得したら EmDash (R2) に保持する。
-og_image が既に入っている投稿と、写真を持つ投稿 (写真自体が EmDash のメディア) は対象外。何度実行してもよい。
+featured_image が既に入っている投稿と、写真を持つ投稿は対象外。何度実行してもよい。
 
 素材の優先順:
   1. YouTube 動画のサムネイル (maxresdefault → hqdefault)
@@ -147,7 +148,7 @@ def find_source(data: dict, site_url: str) -> tuple[str, str] | None:
     if yt:
         image = youtube_thumbnail(yt.group(1))
         return (image, "YouTube") if image else None
-    if data.get("featured_image") or data.get("photos"):
+    if data.get("photos"):
         return None
     for link in content_links(data.get("content"), site_url)[:3]:
         try:
@@ -165,11 +166,18 @@ def main():
     ap.add_argument("--dry-run", action="store_true", help="対象と素材の確認のみ")
     args = ap.parse_args()
 
+    try:
+        slugs = list_posts(args.url)
+    except RuntimeError as e:
+        if "Not authenticated" in str(e):
+            sys.exit(f"未ログイン: web/ で `npx emdash login --url {args.url}` を実行してから再実行してください")
+        raise
+
     done = skipped = failed = 0
-    for slug in list_posts(args.url):
+    for slug in slugs:
         entry = emdash(["content", "get", "posts", slug, "--raw"], args.url)
         data = entry["data"]
-        if data.get("og_image"):
+        if data.get("featured_image"):
             skipped += 1
             continue
         source = find_source(data, args.url)
@@ -199,7 +207,7 @@ def main():
                 "filename": media.get("filename"),
                 "meta": {"storageKey": media["storageKey"], "sourceUrl": image_url},
             }
-            emdash(["content", "update", "posts", slug, "--rev", entry["_rev"], "--data", json.dumps({"og_image": value})], args.url)
+            emdash(["content", "update", "posts", slug, "--rev", entry["_rev"], "--data", json.dumps({"featured_image": value})], args.url)
             done += 1
         except (httpx.HTTPError, RuntimeError, KeyError) as e:
             failed += 1

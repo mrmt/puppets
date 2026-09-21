@@ -10,7 +10,6 @@ interface Props {
 			title: string;
 			video_url?: string | null;
 			featured_image?: unknown;
-			og_image?: unknown;
 			publishedAt?: Date | null;
 		};
 	};
@@ -20,8 +19,8 @@ interface Props {
 
 const { post, label } = Astro.props;
 const videoId = youtubeId(post.data.video_url);
-// サムネイル: EmDash に保存済みの og_image → YouTube → 写真
-const thumb = mediaUrl(post.data.og_image) ?? (videoId ? youtubeThumbnail(videoId) : mediaUrl(post.data.featured_image));
+// サムネイル: EmDash に保存済みの featured_image → YouTube
+const thumb = mediaUrl(post.data.featured_image) ?? (videoId ? youtubeThumbnail(videoId) : null);
 ---
 
 <li class="card">

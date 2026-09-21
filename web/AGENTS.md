@@ -28,7 +28,7 @@ workflow はリポジトリルートの `.github/workflows/` にある (`web/` �
 - `seed/seed.json` は Tumblr からの移行データ (生成物)。初回セットアップ時に投入され、その後の正本は D1。公開日時は seed に載らないため投入後に `seed/published-at.sql` を流す
 - YouTube 埋め込みは Cookie 同意不要にするため `youtube-nocookie.com` を使う
 - リンクだけの段落 (Spotify / Apple Music / YouTube) は表示時にプレイヤーへ変換する (`src/utils/embed.ts`)
-- OGP 画像は `og_image` (EmDash メディア) → 写真 → YouTube サムネイル → `public/og.png`。外部取得はしない (`scripts/backfill_og_images.py` が保存する)
+- OGP 画像・カードのサムネイルは `featured_image` (EmDash メディア) → 写真 → YouTube サムネイル → `public/og.png`。外部取得はしない (`scripts/backfill_og_images.py` が featured_image を埋める)
 
 The admin UI is at `http://localhost:4321/_emdash/admin`.
 
