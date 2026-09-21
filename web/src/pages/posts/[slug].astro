@@ -8,6 +8,7 @@ import Embed from "../../components/Embed.astro";
 import PortableTextLink from "../../components/PortableTextLink.astro";
 import { getArtists } from "../../utils/artists";
 import { formatDate } from "../../utils/format";
+import { linkParagraphsToEmbeds } from "../../utils/embed";
 import { mediaUrl, toPhotos } from "../../utils/media";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import { youtubeId, youtubeThumbnail } from "../../utils/youtube";
@@ -71,7 +72,7 @@ const otherTags = tags.filter((t) => !artistTags.has(t.slug));
 
 			<div class="post-body">
 				<div class="prose">
-					<PortableText value={post.data.content} components={{ type: { embed: Embed }, mark: { link: PortableTextLink } }} />
+					<PortableText value={linkParagraphsToEmbeds(post.data.content)} components={{ type: { embed: Embed }, mark: { link: PortableTextLink } }} />
 				</div>
 				{
 					otherTags.length > 0 && (
