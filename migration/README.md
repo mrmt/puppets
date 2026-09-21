@@ -20,10 +20,11 @@ Tumblr (puppetsmedia) から EmDash (Cloudflare Workers) への移行記録。�
 ## データ変換
 
 ```bash
-uv run scripts/tumblr_to_seed.py   # content/posts → web/seed/seed.json 等
+uv run scripts/tumblr_to_seed.py   # tumblr-export/posts → web/seed/seed.json 等
 ```
 
 - 投稿 107 件 (動画 96 / 写真 6 / テキスト 5)、タグ 132、アーティスト 7
+- Tumblr 時代の投稿 Markdown と旧カスタムページは `tumblr-export/` にアーカイブした (旧 `content/`)
 - Tumblr ホスト画像の原本は `media/` に保存 (`media-urls.json` が投稿 ID との対応)
 - 公開日時は seed に載らないため `web/seed/published-at.sql` で別途反映
 - 既知: `701028279411474432` (Dartmoor by Diastereomer) は Tumblr 上でも動画が失われており (embed 無し)、本文のみ移行
@@ -70,3 +71,9 @@ EmDash の CLI seed はローカル SQLite 専用で、セットアップウィ�
 - `CLOUDFLARE_ACCOUNT_ID`
 - `PUBLIC_CF_BEACON_TOKEN`: Cloudflare Web Analytics のサイトトークン
 - バックアップ用: `CLOUDFLARE_R2_ACCESS_KEY_ID` / `CLOUDFLARE_R2_SECRET_ACCESS_KEY`
+
+## 後片付け (2026/09/21)
+
+- Tumblr 同期ツール (`scripts/sync.py` / `auth.py` / `client.py`、`.tumblr-manifest.json`) を削除した。必要なら git 履歴から参照できる
+- `content/` を `migration/tumblr-export/` に移動した
+- `scripts/tumblr_to_seed.py` は Tumblr API を使わず、`media-urls.json` と `media/` だけで再生成できるようにした

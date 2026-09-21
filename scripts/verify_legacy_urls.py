@@ -20,15 +20,14 @@ import frontmatter
 import httpx
 
 ROOT = Path(__file__).resolve().parent.parent
-ARCHIVE_DIRS = [ROOT / "content/posts", ROOT / "migration/tumblr-export/posts"]
+POSTS_DIR = ROOT / "migration/tumblr-export/posts"
 
 
 def legacy_paths() -> list[tuple[str, str]]:
     """(旧パス, 期待する新パス) の一覧"""
     id_map = json.loads((ROOT / "web/src/utils/tumblr-id-map.json").read_text())
-    posts_dir = next(d for d in ARCHIVE_DIRS if d.exists())
     cases = []
-    for f in sorted(posts_dir.glob("[0-9]*.md")):
+    for f in sorted(POSTS_DIR.glob("[0-9]*.md")):
         meta = frontmatter.load(str(f)).metadata
         post_id = str(meta["id"])
         slug = quote(str(meta.get("slug") or ""))

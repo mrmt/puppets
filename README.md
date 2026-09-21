@@ -1,62 +1,21 @@
 # puppets
 
-[puppets.jp](https://puppets.jp) のサイトおよびコンテンツ管理リポジトリ。
+[puppets.jp](https://puppets.jp) (puppets records) のサイト実装と運営リポジトリ。
 
-サイトは Tumblr でホスティング。このリポジトリで投稿コンテンツを Markdown ファイルとして管理し、Tumblr API 経由で同期する。
-
-## セットアップ
-
-[uv](https://docs.astral.sh/uv/) が必要。
-
-```bash
-uv run scripts/auth.py       # 初回認証（1Password から OAuth トークン取得）
-uv run scripts/sync.py pull  # Tumblr の投稿をローカルへダウンロード
-```
+Astro + [EmDash](https://github.com/emdash-cms/emdash) を Cloudflare Workers で配信している。2026/09 に Tumblr から移行した (経緯は [migration/README.md](migration/README.md))。
 
 ## 投稿の管理
 
+投稿・アーティスト・タグは EmDash の管理画面で編集する: https://puppets.jp/_emdash/admin
+
+記事本文はこのリポジトリには無い (Cloudflare D1 / R2 に格納)。
+
+## 開発
+
 ```bash
-uv run scripts/sync.py status          # ローカルの変更状況を確認
-uv run scripts/sync.py push --dry-run  # 反映内容のプレビュー
-uv run scripts/sync.py push            # Tumblr へ反映
-uv run scripts/sync.py pull            # Tumblr の最新状態をローカルへ同期
+cd web
+pnpm install
+pnpm exec astro dev
 ```
 
-### 新規投稿
-
-`content/posts/new_ファイル名.md` を作成する（`new_` プレフィックスが必須）。
-
-**テキスト投稿:**
-```markdown
----
-id: null
-type: text
-title: タイトル
-tags: [tag1, tag2]
-state: published
----
-
-本文を Markdown で書く
-```
-
-**画像投稿:**
-```markdown
----
-id: null
-type: photo
-tags: [photo]
-state: published
-photos:
-  - local_path: "images/photo.jpg"
-    alt_text: ""
----
-
-キャプション
-```
-
-`push` 後、ファイルは `{id}_{type}_{slug}.md` に自動リネームされる。
-
-### 既存投稿の編集・削除
-
-- **編集**: `content/posts/*.md` を直接編集 → `push`
-- **削除**: ファイルを削除 → `push`（確認プロンプトあり）
+詳細は [web/README.md](web/README.md) を参照。`main` に push するとデプロイされる。
