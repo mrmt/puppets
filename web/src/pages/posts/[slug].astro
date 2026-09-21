@@ -10,7 +10,7 @@ import { getArtists } from "../../utils/artists";
 import { formatDate } from "../../utils/format";
 import { linkParagraphsToEmbeds } from "../../utils/embed";
 import { toPhotos } from "../../utils/media";
-import { postOgImage } from "../../utils/og-image";
+import { ownPostImage } from "../../utils/og-image";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
 import { youtubeId } from "../../utils/youtube";
 
@@ -24,8 +24,8 @@ Astro.cache.set(cacheHint);
 
 const videoId = youtubeId(post.data.video_url);
 const photos = toPhotos(post.data.photos);
-// OGP 画像: 動画サムネイル → 写真 → 本文リンク先 (Spotify / Apple Music / 一般サイト) の画像
-const ogImage = (await postOgImage(post, Astro.url.origin)) ?? undefined;
+// OGP 画像: 保存済み og_image → 写真 → YouTube サムネイル (素材が無ければ共通画像)
+const ogImage = ownPostImage(post, Astro.url.origin) ?? undefined;
 
 const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 const seo = getSeoMeta(post, {

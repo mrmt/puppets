@@ -27,6 +27,8 @@ workflow はリポジトリルートの `.github/workflows/` にある (`web/` �
 - 旧 Tumblr URL (`/post/{id}/…`, `/tagged/…`, `/rss`, `/archive`, `/page/n`) は `src/utils/legacy.ts` で解決して 301。対応表 `src/utils/tumblr-id-map.json` は `scripts/tumblr_to_seed.py` が生成する
 - `seed/seed.json` は Tumblr からの移行データ (生成物)。初回セットアップ時に投入され、その後の正本は D1。公開日時は seed に載らないため投入後に `seed/published-at.sql` を流す
 - YouTube 埋め込みは Cookie 同意不要にするため `youtube-nocookie.com` を使う
+- リンクだけの段落 (Spotify / Apple Music / YouTube) は表示時にプレイヤーへ変換する (`src/utils/embed.ts`)
+- OGP 画像は `og_image` (EmDash メディア) → 写真 → YouTube サムネイル → `public/og.png`。外部取得はしない (`scripts/backfill_og_images.py` が保存する)
 
 The admin UI is at `http://localhost:4321/_emdash/admin`.
 
