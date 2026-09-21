@@ -24,7 +24,7 @@ Astro.cache.set(cacheHint);
 
 const videoId = youtubeId(post.data.video_url);
 const photos = toPhotos(post.data.photos);
-// OGP 画像: 保存済み og_image → 写真 → YouTube サムネイル (素材が無ければ共通画像)
+// OGP 画像: featured_image → 写真 → YouTube サムネイル (素材が無ければ共通画像)
 const ogImage = ownPostImage(post, Astro.url.origin) ?? undefined;
 
 const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());

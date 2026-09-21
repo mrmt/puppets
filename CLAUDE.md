@@ -16,7 +16,7 @@ puppets/
 ├── scripts/
 │   ├── tumblr_to_seed.py   # Tumblr 投稿アーカイブ → EmDash seed 変換 (移行用、再実行は通常不要)
 │   ├── verify_legacy_urls.py  # 旧 Tumblr URL が 301→200 になるかの機械検証
-│   ├── backfill_og_images.py  # 投稿の OGP 画像を素材 (YouTube / リンク先) から取得し EmDash メディアに保存
+│   ├── backfill_og_images.py  # featured_image が空の投稿に素材 (YouTube / リンク先) の画像を取得して設定
 │   └── order_d1_dump.py    # wrangler d1 export の出力を外部キー順に並べ替え
 ├── migration/              # 移行記録 (README.md)、Tumblr 投稿のアーカイブ、Tumblr ホスト画像の原本
 └── .github/workflows/      # web-ci / web-deploy / web-backup / web-link-check
@@ -48,11 +48,11 @@ pnpm test:e2e         # playwright
 
 ## OGP 画像
 
-表示時に外部へ画像を取りに行かない。投稿の OGP 画像は `og_image` フィールド (EmDash メディア) に保存したものを使う。
+表示時に外部へ画像を取りに行かない。投稿の OGP 画像とカードのサムネイルは `featured_image` (EmDash メディア) を使う。
 
-- 優先順: `og_image` → 写真 → YouTube サムネイル → 共通の `og.png`
-- 新しい投稿を追加したら `uv run scripts/backfill_og_images.py --url https://puppets.jp` を実行する (冪等)。素材は YouTube サムネイル、または本文リンク先の Spotify / Apple Music / og:image
-- 管理画面で `OGP Image` を直接設定してもよい
+- 優先順: `featured_image` → 写真 → YouTube サムネイル → 共通の `og.png`
+- 新しい投稿を追加したら `uv run scripts/backfill_og_images.py --url https://puppets.jp` を実行する (冪等)。`featured_image` が空の投稿に、YouTube サムネイルまたは本文リンク先 (Spotify / Apple Music / og:image) の画像を設定する
+- 管理画面で Featured Image を直接設定してもよい
 
 ## Cloudflare
 

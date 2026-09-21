@@ -49,11 +49,6 @@
 					"type": "json"
 				},
 				{
-					"slug": "og_image",
-					"label": "OGP Image",
-					"type": "image"
-				},
-				{
 					"slug": "content",
 					"label": "Content",
 					"type": "portableText",
