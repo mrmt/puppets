@@ -19,7 +19,8 @@
 	--color-accent-hover: #ff7a47;
 	--color-on-accent: #0c0c0d;
 
-	--font-display: "Space Grotesk", sans-serif;
+	/* 見出しも本文と同じ M PLUS 1p */
+	--font-display: var(--font-sans);
 
 	--content-width: 1200px;
 	--prose-width: 720px;
