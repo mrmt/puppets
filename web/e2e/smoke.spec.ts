@@ -9,6 +9,14 @@ test.describe("スモークテスト", () => {
 		});
 	}
 
+	test("OGP 画像は常に絶対 URL で出力される", async ({ page }) => {
+		for (const path of ["/", "/artists", "/posts", "/fa"]) {
+			await page.goto(path);
+			const og = await page.locator('meta[property="og:image"]').getAttribute("content");
+			expect(og, path).toMatch(/^https?:\/\//);
+		}
+	});
+
 	test("RSSがXMLで配信される", async ({ request }) => {
 		const response = await request.get("/rss.xml");
 		expect(response.status()).toBe(200);

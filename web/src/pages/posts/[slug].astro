@@ -8,9 +8,11 @@ import Embed from "../../components/Embed.astro";
 import PortableTextLink from "../../components/PortableTextLink.astro";
 import { getArtists } from "../../utils/artists";
 import { formatDate } from "../../utils/format";
-import { mediaUrl, toPhotos } from "../../utils/media";
+import { linkParagraphsToEmbeds } from "../../utils/embed";
+import { toPhotos } from "../../utils/media";
+import { ownPostImage } from "../../utils/og-image";
 import { resolveBlogSiteIdentity } from "../../utils/site-identity";
-import { youtubeId, youtubeThumbnail } from "../../utils/youtube";
+import { youtubeId } from "../../utils/youtube";
 
 const slug = decodeSlug(Astro.params.slug);
 const { entry: post, cacheHint } = slug ? await getEmDashEntry("posts", slug) : { entry: null, cacheHint: undefined };
@@ -22,12 +24,8 @@ Astro.cache.set(cacheHint);
 
 const videoId = youtubeId(post.data.video_url);
 const photos = toPhotos(post.data.photos);
-const ogImage = videoId
-	? youtubeThumbnail(videoId)
-	: (() => {
-			const url = mediaUrl(post.data.featured_image);
-			return url ? new URL(url, Astro.url.origin).href : undefined;
-		})();
+// OGP 画像: 保存済み og_image → 写真 → YouTube サムネイル (素材が無ければ共通画像)
+const ogImage = ownPostImage(post, Astro.url.origin) ?? undefined;
 
 const { siteTitle } = resolveBlogSiteIdentity(await getSiteSettings());
 const seo = getSeoMeta(post, {
@@ -71,7 +69,7 @@ const otherTags = tags.filter((t) => !artistTags.has(t.slug));
 
 			<div class="post-body">
 				<div class="prose">
-					<PortableText value={post.data.content} components={{ type: { embed: Embed }, mark: { link: PortableTextLink } }} />
+					<PortableText value={linkParagraphsToEmbeds(post.data.content)} components={{ type: { embed: Embed }, mark: { link: PortableTextLink } }} />
 				</div>
 				{
 					otherTags.length > 0 && (

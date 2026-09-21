@@ -6,6 +6,7 @@ import PostCard from "../../components/PostCard.astro";
 import PortableTextLink from "../../components/PortableTextLink.astro";
 import { artistLinks } from "../../utils/artists";
 import { mediaUrl } from "../../utils/media";
+import { firstOwnImage } from "../../utils/og-image";
 
 const slug = decodeSlug(Astro.params.slug);
 const { entry: artist, cacheHint } = slug ? await getEmDashEntry("artists", slug) : { entry: null, cacheHint: undefined };
@@ -21,12 +22,14 @@ const { entries: posts } = await getEmDashCollection("posts", {
 });
 const links = artistLinks(artist.data.links);
 const image = mediaUrl(artist.data.image);
+// OGP 画像: アーティスト画像 → 最新の動画・写真
+const ogImage = image ? new URL(image, Astro.url.origin).href : firstOwnImage(posts, Astro.url.origin);
 ---
 
 <Base
 	title={artist.data.name}
 	description={`${artist.data.name} — puppets records`}
-	image={image}
+	image={ogImage}
 	content={{ collection: "artists", id: artist.data.id, slug: artist.id }}
 >
 	<section class="section artist-head">

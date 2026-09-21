@@ -35,6 +35,8 @@ const {
 } = Astro.props;
 const { siteTitle, siteTagline, siteFavicon } = resolveBlogSiteIdentity(await getSiteSettings());
 const fullTitle = title.includes(siteTitle) ? title : `${title} — ${siteTitle}`;
+// OGP 画像は絶対 URL 必須。未指定のページはサイト共通の画像を使う
+const ogImage = new URL(image ?? "/og.png", Astro.url.origin).href;
 
 const menu = await getMenu("primary");
 
@@ -46,9 +48,9 @@ const pageCtx = createPublicPageContext({
 	pageTitle: pageTitle ?? title,
 	description: description ?? siteTagline,
 	canonical,
-	image,
+	image: ogImage,
 	content,
-	seo: { ogImage: image, robots },
+	seo: { ogImage, robots },
 	articleMeta: { publishedTime, modifiedTime },
 	siteName: siteTitle,
 });
