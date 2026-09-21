@@ -44,6 +44,14 @@ EmDash の CLI seed はローカル SQLite 専用で、セットアップウィ�
 5. 画像を R2 に投入する: `media.storage_key` ごとに `wrangler r2 object put puppets-media/<key> --remote`
 6. FTS インデックスは起動時に自動で再構築される (ローカルのリハーサルで確認済み)
 
+### 実施記録 (2026/09/21)
+
+- 投入前に本番 Worker へのアクセスが発生し、スキーマが自動作成済みだった。そのため手順 4 は INSERT 文だけで実施した
+  - 対象: revisions / taxonomies / media / ec_posts / ec_artists / content_taxonomies / media_usage 系 / revision_prune_queue
+  - スキーマ系テーブル (collections / fields / taxonomy_defs / menus) はローカルと同じ内容・同じ ID で自動作成されていた
+- R2 に 18 ファイルを投入
+- workers.dev で旧 URL 検証 120/120 OK、全文検索は動作、`/_emdash/admin` はセットアップへリダイレクトすることを確認
+
 ## 切替手順
 
 1. workers.dev で内容を確認 (チェックポイント 1)
