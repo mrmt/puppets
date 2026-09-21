@@ -70,11 +70,24 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings
 
 <style>
 	.hero {
+		position: relative;
+		isolation: isolate;
+		overflow: hidden;
 		padding-block: clamp(64px, 12vw, 160px) clamp(32px, 6vw, 72px);
 		border-bottom: 1px solid var(--color-border-subtle);
-		background:
-			linear-gradient(to bottom, transparent 0 calc(100% - 1px), var(--color-border-subtle) 0) 0 0 / 100% 48px,
-			var(--color-bg);
+		background: var(--color-bg);
+	}
+
+	/* 糸で吊られた人影の写真を薄く敷く。文字の可読性を優先し、低い不透明度で下端は背景色へ溶かす */
+	.hero::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: url("/images/hero.jpg") center 35% / cover no-repeat;
+		filter: grayscale(1) contrast(1.1);
+		opacity: 0.2;
+		mask-image: linear-gradient(to bottom, #000 55%, transparent);
 	}
 
 	.hero-title {
