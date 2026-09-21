@@ -464,9 +464,9 @@ def cmd_push(args: list[str]):
             for f in files.values():
                 f[1].close()
 
-        # frontmatter を更新して ID と date を書き込む
+        # frontmatter を更新して ID と date を書き込む(バックデート指定時は元の date を維持)
         meta["id"] = int(post_id)
-        meta["date"] = now_iso()
+        meta["date"] = meta.get("date") or now_iso()
         meta.pop("local_path", None)
         # photos の local_path を url に書き換え（取得できないため URL は暫定）
         if "photos" in meta:
