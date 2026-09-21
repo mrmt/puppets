@@ -3,6 +3,7 @@ import { getTerm, getEmDashCollection, decodeSlug } from "emdash";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getArtists, withArtistLabels } from "../../utils/artists";
+import { firstOwnImage } from "../../utils/og-image";
 
 const slug = decodeSlug(Astro.params.slug);
 const term = slug ? await getTerm("tag", slug) : null;
@@ -20,7 +21,7 @@ const { artists } = await getArtists();
 const cards = await withArtistLabels(posts, artists);
 ---
 
-<Base title={`#${term.label}`} description={`Posts tagged ${term.label}`}>
+<Base title={`#${term.label}`} description={`Posts tagged ${term.label}`} image={firstOwnImage(posts, Astro.url.origin)}>
 	<section class="section">
 		<div class="container">
 			<p class="eyebrow">Tag / {posts.length} posts</p>

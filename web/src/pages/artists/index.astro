@@ -23,7 +23,14 @@ const items = await Promise.all(
 );
 ---
 
-<Base title="Artists" description="puppets records のアーティスト一覧">
+<Base
+	title="Artists"
+	description="puppets records のアーティスト一覧"
+	image={(() => {
+		const cover = items.find((i) => i.cover)?.cover;
+		return cover ? new URL(cover, Astro.url.origin).href : null;
+	})()}
+>
 	<section class="section">
 		<div class="container">
 			<p class="eyebrow">Roster</p>

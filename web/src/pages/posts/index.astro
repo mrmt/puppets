@@ -3,6 +3,7 @@ import { getEmDashCollection } from "emdash";
 import Base from "../../layouts/Base.astro";
 import PostCard from "../../components/PostCard.astro";
 import { getArtists, withArtistLabels } from "../../utils/artists";
+import { firstOwnImage } from "../../utils/og-image";
 
 const PER_PAGE = 24;
 const page = Math.max(1, Number.parseInt(Astro.url.searchParams.get("page") ?? "1", 10) || 1);
@@ -22,7 +23,11 @@ const { artists } = await getArtists();
 const cards = await withArtistLabels(entries, artists);
 ---
 
-<Base title={page > 1 ? `Posts — page ${page}` : "Posts"} description="puppets records の投稿一覧">
+<Base
+	title={page > 1 ? `Posts — page ${page}` : "Posts"}
+	description="puppets records の投稿一覧"
+	image={firstOwnImage(entries, Astro.url.origin)}
+>
 	<section class="section">
 		<div class="container">
 			<p class="eyebrow">Archive{page > 1 && ` / page ${page}`}</p>
