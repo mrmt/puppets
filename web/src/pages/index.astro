@@ -45,7 +45,6 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings
 					artists.map((artist, i) => (
 						<li>
 							<a href={`/artists/${artist.id}`} class="roster-row">
-								<span class="meta roster-no">{String(i + 1).padStart(2, "0")}</span>
 								<span class="roster-thumb" aria-hidden="true">
 									{mediaUrl(artist.data.image) && <img src={mediaUrl(artist.data.image)} alt="" loading="lazy" decoding="async" />}
 								</span>
@@ -114,7 +113,7 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings
 
 	.roster-row {
 		display: grid;
-		grid-template-columns: 3ch auto 1fr auto;
+		grid-template-columns: auto 1fr auto;
 		align-items: center;
 		gap: 20px;
 		padding-block: 14px;
@@ -153,10 +152,6 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings
 	}
 
 	.roster-row:hover .roster-name {
-		color: var(--color-accent);
-	}
-
-	.roster-row:hover .roster-no {
 		color: var(--color-accent);
 	}
 </style>
