@@ -38,7 +38,7 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings
 		<div class="container">
 			<div class="section-head">
 				<h2>Artists</h2>
-				<a href="/artists" class="meta">All artists →</a>
+				<a href="/artists" class="more-link">All artists <span class="arrow" aria-hidden="true">→</span></a>
 			</div>
 			<ol class="roster">
 				{
@@ -62,11 +62,14 @@ const { siteTitle, siteTagline } = resolveBlogSiteIdentity(await getSiteSettings
 		<div class="container">
 			<div class="section-head">
 				<h2>Latest</h2>
-				<a href="/posts" class="meta">All posts →</a>
+				<a href="/posts" class="more-link">All posts <span class="arrow" aria-hidden="true">→</span></a>
 			</div>
 			<ul class="card-grid">
 				{cards.map(({ post, label }) => <PostCard post={post} label={label} />)}
 			</ul>
+			<a href="/posts" class="more-link more-link--primary more-link--block">
+				All posts <span class="arrow" aria-hidden="true">→</span>
+			</a>
 		</div>
 	</section>
 </Base>

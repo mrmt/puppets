@@ -35,9 +35,25 @@ const cards = await withArtistLabels(entries, artists);
 			<ul class="card-grid">
 				{cards.map(({ post, label }) => <PostCard post={post} label={label} />)}
 			</ul>
-			<nav class="pagination meta" aria-label="ページ送り">
-				<span>{page > 1 && <a href={page === 2 ? "/posts" : `/posts?page=${page - 1}`}>← Newer</a>}</span>
-				<span>{hasMore && <a href={`/posts?page=${page + 1}`}>Older →</a>}</span>
+			<nav class="pagination" aria-label="ページ送り">
+				<span>
+					{
+						page > 1 && (
+							<a href={page === 2 ? "/posts" : `/posts?page=${page - 1}`} rel="prev" class="more-link">
+								<span class="arrow" aria-hidden="true">←</span> Newer
+							</a>
+						)
+					}
+				</span>
+				<span>
+					{
+						hasMore && (
+							<a href={`/posts?page=${page + 1}`} rel="next" class="more-link more-link--primary">
+								Older <span class="arrow" aria-hidden="true">→</span>
+							</a>
+						)
+					}
+				</span>
 			</nav>
 		</div>
 	</section>

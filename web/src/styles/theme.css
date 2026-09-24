@@ -123,7 +123,7 @@ img {
 
 .section-head {
 	display: flex;
-	align-items: baseline;
+	align-items: center;
 	justify-content: space-between;
 	gap: 16px;
 	border-bottom: 1px solid var(--color-border);
@@ -138,12 +138,69 @@ img {
 	margin: 0;
 }
 
-.section-head a {
+/*
+  一覧への導線・ページ送り。アクセント色の枠付きボタンにして「押せる」ことを明示する。
+  タップ領域は 44px 以上
+*/
+.more-link {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.6em;
+	min-height: 44px;
+	padding: 0 20px;
+	border: 1px solid var(--color-accent);
+	border-radius: 999px;
+	font-family: var(--font-mono), monospace;
+	font-size: 0.8rem;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	color: var(--color-accent);
 	text-decoration: none;
+	transition:
+		background-color 0.15s,
+		border-color 0.15s,
+		color 0.15s;
 }
 
-.section-head a:hover {
-	color: var(--color-accent);
+.more-link:hover {
+	background: var(--color-accent);
+	color: var(--color-on-accent);
+}
+
+.more-link .arrow {
+	font-size: 1.3em;
+	line-height: 1;
+	transition: transform 0.2s;
+}
+
+.more-link:hover .arrow {
+	transform: translateX(4px);
+}
+
+.more-link[rel="prev"]:hover .arrow {
+	transform: translateX(-4px);
+}
+
+/* 主要な導線 (次へ進む方向) は塗りつぶし */
+.more-link--primary {
+	background: var(--color-accent);
+	color: var(--color-on-accent);
+}
+
+.more-link--primary:hover {
+	background: var(--color-accent-hover);
+	border-color: var(--color-accent-hover);
+}
+
+/* セクション末尾に置く横幅いっぱいのボタン */
+.more-link--block {
+	display: flex;
+	width: 100%;
+	min-height: 56px;
+	margin-top: 40px;
+	font-size: 0.9rem;
 }
 
 /* 動画・投稿カードのグリッド */
@@ -207,14 +264,6 @@ img {
 	margin-top: 48px;
 	padding-top: 20px;
 	border-top: 1px solid var(--color-border);
-}
-
-.pagination a {
-	text-decoration: none;
-}
-
-.pagination a:hover {
-	color: var(--color-accent);
 }
 
 .visually-hidden {
