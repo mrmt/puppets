@@ -2,7 +2,7 @@ overrides:
   astro-embed: ^0.13.1
   body-parser: ^2.3.0
   browserslist: ^4.28.7
-  dompurify: ^3.4.13
+  dompurify: ^3.4.16
   echarts: ^6.1.0
   esbuild: ^0.28.1
   undici: ^7.29.0
