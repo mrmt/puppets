@@ -35,7 +35,8 @@ fi
 
 # 遅延 import される chunk の例外は初回以降のリクエストで出るため、複数パスを複数回叩く
 fail=0
-for path in / /posts / /posts; do
+# 空DB (CI) では / と /posts は setup への 302 になるため、SSR される setup 画面も叩く
+for path in / /posts /_emdash/admin/setup / /posts /_emdash/admin/setup; do
   status=$(curl -s -o "$BODY" -w "%{http_code}" "http://localhost:$PORT$path" || true)
   echo "GET $path -> $status"
   # 空DB のローカル環境では emdash が 503 (migration 必須) を返す。これは Worker が正常に動いている証拠
