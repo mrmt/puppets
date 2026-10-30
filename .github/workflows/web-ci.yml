@@ -71,6 +71,8 @@ jobs:
             astro-fonts-${{ runner.os }}-
 
       - run: pnpm build
+      # 起動時例外 (error 1101) の検出: ビルド成果物を wrangler dev で起動して確認
+      - run: ./scripts/smoke-test.sh
 
       - name: Save font cache
         if: always()
