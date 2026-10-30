@@ -51,7 +51,7 @@ jobs:
 
       - name: Restore font cache
         id: font-cache
-        uses: actions/cache/restore@v4.3.0
+        uses: actions/cache/restore@v6.1.0
         with:
           path: web/node_modules/.astro/fonts
           key: astro-fonts-${{ runner.os }}-${{ hashFiles('web/astro.config.mjs', 'web/pnpm-lock.yaml') }}-${{ github.run_id }}
@@ -67,7 +67,7 @@ jobs:
 
       - name: Save font cache
         if: always()
-        uses: actions/cache/save@v4.3.0
+        uses: actions/cache/save@v6.1.0
         with:
           path: web/node_modules/.astro/fonts
           key: ${{ steps.font-cache.outputs.cache-primary-key }}
